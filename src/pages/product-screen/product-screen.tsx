@@ -1,6 +1,8 @@
 import Layout from '../../components/layout/layout';
 
+
 function ProductScreen(): JSX.Element {
+
   return (
     <Layout pageTitle="Карточка товара">
       <main>
