@@ -7,9 +7,10 @@ import { ToastContainer } from 'react-toastify';
 import App from './components/app/app';
 import { Provider } from 'react-redux';
 import { store } from './store';
-import { fetchCamerasAction } from './store/api-actions';
+import { fetchCamerasAction, fetchPromoAction } from './store/api-actions';
 
 store.dispatch(fetchCamerasAction());
+store.dispatch(fetchPromoAction());
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement

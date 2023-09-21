@@ -1,10 +1,10 @@
-import Banner from '../../components/banner/banner';
 import Breadcrumbs from '../../components/breadcrumbs/breadcrumbs';
 import CatalogFilter from '../../components/catalog-filter/catalog-filter';
 import CatalogSort from '../../components/catalog-sort/catalog-sort';
 import Layout from '../../components/layout/layout';
 import Pagination from '../../components/pagination/pagination';
 import ProductCard from '../../components/product-card/product-card';
+import SwiperPromo from '../../components/swiper/swiper';
 import { useAppSelector } from '../../hooks';
 import { getCameras } from '../../store/cameras/cameras.selectors';
 
@@ -12,10 +12,11 @@ function CatalogScreen(): JSX.Element {
 
   const cameraList = useAppSelector(getCameras);
 
+
   return (
     <Layout pageTitle="Каталог">
       <main>
-        <Banner />
+        <SwiperPromo />
         <div className="page-content">
           <Breadcrumbs />
           <section className="catalog">

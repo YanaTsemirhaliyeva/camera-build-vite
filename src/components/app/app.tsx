@@ -8,12 +8,14 @@ import NotFoundScreen from '../../pages/not-found-screen/not-found-screen';
 import { useAppSelector } from '../../hooks';
 import { isCamerasDataStatusLoading } from '../../store/cameras/cameras.selectors';
 import Spinner from '../spinner/spinner';
+import { isPromoDataLoading } from '../../store/promo/promo.selectors';
 
 function App(): JSX.Element {
 
   const isCamerasDataLoading = useAppSelector(isCamerasDataStatusLoading);
+  const isPromoStatusDataLoading = useAppSelector(isPromoDataLoading);
 
-  if (isCamerasDataLoading) {
+  if (isCamerasDataLoading || isPromoStatusDataLoading) {
     return <Spinner/>;
   }
 

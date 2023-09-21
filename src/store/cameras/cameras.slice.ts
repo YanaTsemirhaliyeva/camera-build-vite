@@ -1,9 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { Cameras } from '../../types/state';
+import { CameraData } from '../../types/state';
 import { NameSpace } from '../../const';
-import { fetchCamerasAction } from '../api-actions';
+import { fetchCameraItemAction, fetchCamerasAction } from '../api-actions';
 
-const initialState: Cameras = {
+const initialState: CameraData = {
   cameras: [],
   isCamerasDataLoading: false,
   cameraItem: null,
@@ -26,6 +26,16 @@ export const cameras = createSlice({
       })
       .addCase(fetchCamerasAction.rejected, (state) => {
         state.isCamerasDataLoading = false;
+      })
+      .addCase(fetchCameraItemAction.pending, (state) => {
+        state.isCameraItemDataLoading = true;
+      })
+      .addCase(fetchCameraItemAction.fulfilled, (state, action) => {
+        state.cameraItem = action.payload;
+        state.isCameraItemDataLoading = false;
+      })
+      .addCase(fetchCameraItemAction.rejected, (state) => {
+        state.isCameraItemDataLoading = false;
       });
   },
 });
