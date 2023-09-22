@@ -12,6 +12,7 @@ export type CameraData = {
   cameraItem: Camera | null;
   isCameraItemDataLoading: boolean;
   hasError: boolean;
+  activePage: number;
 };
 
 export type PromoData = {

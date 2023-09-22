@@ -23,6 +23,9 @@ export enum NameSpace {
   Coupon = 'COUPON',
 }
 
+export const ITEMS_PER_PAGE = 9;
+export const MAX_PAGES_COUNT_PER_PAGE = 3;
+
 export enum CameraTypes {
   Коллекционная = 'Коллекционная',
   Моментальная = 'Моментальная',

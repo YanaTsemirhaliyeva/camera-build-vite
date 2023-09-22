@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { CameraData } from '../../types/state';
 import { NameSpace } from '../../const';
 import { fetchCameraItemAction, fetchCamerasAction } from '../api-actions';
@@ -9,12 +9,17 @@ const initialState: CameraData = {
   cameraItem: null,
   isCameraItemDataLoading: false,
   hasError: false,
+  activePage: 1,
 };
 
 export const cameras = createSlice({
   name: NameSpace.Cameras,
   initialState,
-  reducers: {},
+  reducers: {
+    setActivePage: (state, action: PayloadAction<number>) => {
+      state.activePage = action.payload;
+    }
+  },
   extraReducers(builder) {
     builder
       .addCase(fetchCamerasAction.pending, (state) => {
@@ -39,3 +44,5 @@ export const cameras = createSlice({
       });
   },
 });
+
+export const { setActivePage } = cameras.actions;
