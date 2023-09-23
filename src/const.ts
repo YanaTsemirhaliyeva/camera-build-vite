@@ -49,3 +49,5 @@ export enum CouponType {
   'camera-444' = 'camera-444',
   'camera-555' = 'camera-555',
 }
+
+export const RATING = [1, 2, 3, 4, 5];
