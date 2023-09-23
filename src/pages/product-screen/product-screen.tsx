@@ -6,11 +6,12 @@ import SimilarProducts from '../../components/similar-products/similar-products'
 import { AppRoute } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getCameraItem, isCameraItemStatusLoading } from '../../store/cameras/cameras.selectors';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { fetchCameraItemAction } from '../../store/api-actions';
 import Spinner from '../../components/spinner/spinner';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
 import RatingStars from '../../components/rating-stars/rating-stars';
+import classNames from 'classnames';
 
 
 function ProductScreen(): JSX.Element {
@@ -19,6 +20,8 @@ function ProductScreen(): JSX.Element {
 
   const currentProduct = useAppSelector(getCameraItem);
   const isDataProductLoading = useAppSelector(isCameraItemStatusLoading);
+
+  const [isActive, setIsActive] = useState<boolean>(true);
 
   useEffect(() => {
     if (cameraId) {
@@ -68,11 +71,23 @@ function ProductScreen(): JSX.Element {
                   </button>
                   <div className="tabs product__tabs">
                     <div className="tabs__controls product__tabs-controls">
-                      <button className="tabs__control" type="button">Характеристики</button>
-                      <button className="tabs__control is-active" type="button">Описание</button>
+                      <button
+                        className={classNames({'is-active': !isActive}, 'tabs__control')}
+                        type="button"
+                        onClick={() => setIsActive(!isActive)}
+                      >
+                        Характеристики
+                      </button>
+                      <button
+                        className={classNames({'is-active': isActive}, 'tabs__control')}
+                        type="button"
+                        onClick={() => setIsActive(!isActive)}
+                      >
+                        Описание
+                      </button>
                     </div>
                     <div className="tabs__content">
-                      <div className="tabs__element">
+                      <div className={classNames({'is-active': !isActive}, 'tabs__element')}>
                         <ul className="product__tabs-list">
                           <li className="item-list"><span className="item-list__title">Артикул:</span>
                             <p className="item-list__text">{vendorCode}</p>
@@ -88,10 +103,10 @@ function ProductScreen(): JSX.Element {
                           </li>
                         </ul>
                       </div>
-                      <div className="tabs__element is-active">
+                      <div className={classNames({'is-active': isActive}, 'tabs__element')}>
                         <div className="product__tabs-text">
                           <p>{description.split('.')[0]}.</p>
-                          <p>{description.split('.').slice(1, -1).join('.')}.</p>
+                          {description.split('.').length > 1 && <p>{description.split('.').slice(1).join('.')}.</p>}
                         </div>
                       </div>
                     </div>
