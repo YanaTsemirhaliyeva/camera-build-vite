@@ -21,6 +21,7 @@ function CatalogScreen(): JSX.Element {
 
   const [searchParams, setSearchParams] = useSearchParams();
   const currentPage = searchParams.get('page');
+  const pageCount = Math.ceil(cameraList.length / ITEMS_PER_PAGE);
 
   const currentParams = useMemo(() => {
     const params: QueryParams = {};
@@ -64,7 +65,9 @@ function CatalogScreen(): JSX.Element {
                   <div className="cards catalog__cards">
                     {cameraList.slice(firstContentIndex, lastContentIndex).map((item) => <ProductCard camera={item} key={item.id} />)}
                   </div>}
-                  <Pagination totalCountCameras={cameraList.length} currentPage={activePage} />
+                  {Number(currentPage) < pageCount ?
+                    <Pagination totalCountCameras={cameraList.length} currentPage={activePage} />
+                    : <p>Запрашиваемая cтраница с товаром не найдена</p>}
                 </div>
               </div>
             </div>
