@@ -6,7 +6,7 @@ import Layout from '../../components/layout/layout';
 import Pagination from '../../components/pagination/pagination';
 import ProductCard from '../../components/product-card/product-card';
 import SwiperPromo from '../../components/swiper/swiper';
-import { ITEMS_PER_PAGE } from '../../const';
+import { AppRoute, ITEMS_PER_PAGE } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getActivePageNumber, getCameras } from '../../store/cameras/cameras.selectors';
 import { useEffect, useMemo } from 'react';
@@ -32,15 +32,14 @@ function CatalogScreen(): JSX.Element {
   }, [activePage]);
 
   useEffect(() => {
-    if(currentPage) {
+    if(currentPage && Number(currentPage) <= pageCount) {
       dispatch(setActivePage(Number(currentPage)));
     }
-  }, [currentPage, dispatch]);
+  }, [currentPage, dispatch, pageCount]);
 
   useEffect(() => {
     setSearchParams(currentParams);
   }, [setSearchParams, currentParams]);
-
 
   const lastContentIndex = activePage * ITEMS_PER_PAGE;
   const firstContentIndex = lastContentIndex - ITEMS_PER_PAGE;
@@ -50,7 +49,7 @@ function CatalogScreen(): JSX.Element {
       <main>
         <SwiperPromo />
         <div className="page-content">
-          <Breadcrumbs />
+          <Breadcrumbs page={AppRoute.Index} />
           <section className="catalog">
             <div className="container">
               <h1 className="title title--h2">Каталог фото- и видеотехники</h1>
@@ -65,9 +64,7 @@ function CatalogScreen(): JSX.Element {
                   <div className="cards catalog__cards">
                     {cameraList.slice(firstContentIndex, lastContentIndex).map((item) => <ProductCard camera={item} key={item.id} />)}
                   </div>}
-                  {Number(currentPage) < pageCount ?
-                    <Pagination totalCountCameras={cameraList.length} currentPage={activePage} />
-                    : <p>Запрашиваемая cтраница с товаром не найдена</p>}
+                  <Pagination totalCountCameras={cameraList.length} currentPage={activePage} />
                 </div>
               </div>
             </div>

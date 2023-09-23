@@ -17,6 +17,9 @@ function Pagination({totalCountCameras, currentPage}: PaginationProps): JSX.Elem
   if (isNaN(page)) {
     page = currentPage;
   }
+  if (page > pageCount) {
+    page = 1;
+  }
 
   const modulo = page % MAX_PAGES_COUNT_PER_PAGE;
   const activePageForward = () => {
