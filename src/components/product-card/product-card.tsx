@@ -5,13 +5,20 @@ import RatingStars from '../rating-stars/rating-stars';
 
 type ProductCardProps = {
   camera: Camera;
+  setIsModalActive: (arg: boolean) => void;
+  setCurrentCamera: (arg: number) => void;
 }
 
-function ProductCard({camera}: ProductCardProps): JSX.Element {
+function ProductCard({camera, setIsModalActive, setCurrentCamera}: ProductCardProps): JSX.Element {
 
   const {id, name, price, rating, reviewCount, previewImg, previewImg2x, previewImgWebp, previewImgWebp2x} = camera;
   const sourceSrcSet = `${previewImgWebp}, ${previewImgWebp2x} 2x`;
   const imgSrcSet = `${previewImg2x} 2x`;
+
+  const onButtonBuyClick = () => {
+    setCurrentCamera(id);
+    setIsModalActive(true);
+  };
 
   return (
     <div className="product-card">
@@ -33,7 +40,10 @@ function ProductCard({camera}: ProductCardProps): JSX.Element {
         </p>
       </div>
       <div className="product-card__buttons">
-        <button className="btn btn--purple product-card__btn" type="button">Купить
+        <button className="btn btn--purple product-card__btn" type="button"
+          onClick={onButtonBuyClick}
+        >
+          Купить
         </button>
         <Link className="btn btn--transparent" to={`${AppRoute.Product}/${id}`}>Подробнее
         </Link>

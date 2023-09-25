@@ -9,15 +9,20 @@ import SwiperPromo from '../../components/swiper/swiper';
 import { AppRoute, ITEMS_PER_PAGE } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getActivePageNumber, getCameras } from '../../store/cameras/cameras.selectors';
-import { useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { setActivePage } from '../../store/cameras/cameras.slice';
 import { QueryParams } from '../../types/query-params';
+import ModalBuyProduct from '../../components/modal-buy-product/modal-buy-product';
 
 function CatalogScreen(): JSX.Element {
 
   const dispatch = useAppDispatch();
   const cameraList = useAppSelector(getCameras);
   const activePage = useAppSelector(getActivePageNumber);
+
+  const [isModalActive, setIsModalACtive] = useState(false);
+  const [currentCamera, setCurrentCamera] = useState<number>();
+  const activeCamera = cameraList.find((item) => item.id === currentCamera);
 
   const [searchParams, setSearchParams] = useSearchParams();
   const currentPage = searchParams.get('page');
@@ -62,7 +67,8 @@ function CatalogScreen(): JSX.Element {
 
                   {cameraList.length > 0 &&
                   <div className="cards catalog__cards">
-                    {cameraList.slice(firstContentIndex, lastContentIndex).map((item) => <ProductCard camera={item} key={item.id} />)}
+                    {cameraList.slice(firstContentIndex, lastContentIndex).map((item) =>
+                      <ProductCard camera={item} key={item.id} setIsModalActive={setIsModalACtive} setCurrentCamera={setCurrentCamera} />)}
                   </div>}
                   <Pagination totalCountCameras={cameraList.length} currentPage={activePage} />
                 </div>
@@ -70,6 +76,7 @@ function CatalogScreen(): JSX.Element {
             </div>
           </section>
         </div>
+        {activeCamera && <ModalBuyProduct isActive={isModalActive} setIsModalActive={setIsModalACtive} camera={activeCamera}/>}
       </main>
     </Layout>
   );

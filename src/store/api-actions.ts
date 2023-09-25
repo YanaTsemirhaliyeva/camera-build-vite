@@ -5,6 +5,7 @@ import { AxiosInstance } from 'axios';
 import { APIRoute } from '../const';
 import { Promo } from '../types/promo';
 import { generatePath } from 'react-router-dom';
+import { Review } from '../types/review';
 
 export const fetchCamerasAction = createAsyncThunk<Camera[], undefined, {
   dispatch: AppDispatch;
@@ -41,3 +42,28 @@ export const fetchCameraItemAction = createAsyncThunk<Camera, string, {
     return data;
   }
 );
+
+export const fetchSimilarProductsAction = createAsyncThunk<Camera[], string, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'DATA/fetchSimilar',
+  async (cameraId, {extra: api}) => {
+    const {data} = await api.get<Camera[]>(generatePath(APIRoute.Similar, {cameraId: cameraId}));
+    return data;
+  }
+);
+
+export const fetchReviewsAction = createAsyncThunk<Review[], string, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'DATA/fetchReviews',
+  async (cameraId, {extra: api}) => {
+    const {data} = await api.get<Review[]>(generatePath(APIRoute.Reviews, {cameraId: cameraId}));
+    return data;
+  }
+);
+

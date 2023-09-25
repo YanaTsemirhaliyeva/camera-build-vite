@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import Breadcrumbs from '../../components/breadcrumbs/breadcrumbs';
 import Layout from '../../components/layout/layout';
 import ReviewBlock from '../../components/review-block/review-block';
@@ -7,11 +7,15 @@ import { AppRoute } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getCameraItem, isCameraItemStatusLoading } from '../../store/cameras/cameras.selectors';
 import { useEffect, useState } from 'react';
-import { fetchCameraItemAction } from '../../store/api-actions';
+import { fetchCameraItemAction, fetchReviewsAction, fetchSimilarProductsAction } from '../../store/api-actions';
 import Spinner from '../../components/spinner/spinner';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
 import RatingStars from '../../components/rating-stars/rating-stars';
 import classNames from 'classnames';
+import { getSimilarProducts,
+  // isSimilarProductsLoading
+} from '../../store/similar/similar.selectors';
+import { getReviews } from '../../store/reviews/reviews.selectors';
 
 
 function ProductScreen(): JSX.Element {
@@ -21,11 +25,20 @@ function ProductScreen(): JSX.Element {
   const currentProduct = useAppSelector(getCameraItem);
   const isDataProductLoading = useAppSelector(isCameraItemStatusLoading);
 
+  const similarProducts = useAppSelector(getSimilarProducts);
+  // const isSimilarDataLoading = useAppSelector(isSimilarProductsLoading);
+
+  const reviews = useAppSelector(getReviews);
+
+
   const [isActive, setIsActive] = useState<boolean>(true);
+  // const [activeSlice, setActiveSlice] = useState(0);
 
   useEffect(() => {
     if (cameraId) {
       dispatch(fetchCameraItemAction(cameraId));
+      dispatch(fetchSimilarProductsAction(cameraId));
+      dispatch(fetchReviewsAction(cameraId));
     }
   }, [cameraId, dispatch]);
 
@@ -106,7 +119,7 @@ function ProductScreen(): JSX.Element {
                       <div className={classNames({'is-active': isActive}, 'tabs__element')}>
                         <div className="product__tabs-text">
                           <p>{description.split('.')[0]}.</p>
-                          {description.split('.').length > 1 && <p>{description.split('.').slice(1).join('.')}.</p>}
+                          {description.split('.').length > 1 && <p>{description.split('.').slice(1).join('.')}</p>}
                         </div>
                       </div>
                     </div>
@@ -116,18 +129,25 @@ function ProductScreen(): JSX.Element {
             </section>
           </div>
           <div className="page-content__section">
-            <SimilarProducts />
+            {similarProducts.length > 0 && <SimilarProducts similars={similarProducts} />}
           </div>
           <div className="page-content__section">
-            <ReviewBlock />
+            {reviews.length > 0 && <ReviewBlock reviews={reviews} /> }
           </div>
         </div>
       </main>
-      <a className="up-btn" href="#header">
+      <Link className="up-btn" to="#header"
+        onClick={() => {
+          window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+          });
+        }}
+      >
         <svg width="12" height="18" aria-hidden="true">
           <use xlinkHref="#icon-arrow2"></use>
         </svg>
-      </a>
+      </Link>
     </Layout>
   );
 }

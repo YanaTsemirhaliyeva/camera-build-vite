@@ -21,6 +21,7 @@ export enum NameSpace {
   Reviews = 'REVIEWS',
   Promo = 'PROMO',
   Coupon = 'COUPON',
+  Similar = 'SIMILAR',
 }
 
 export const ITEMS_PER_PAGE = 9;
