@@ -5,7 +5,7 @@ import { AxiosInstance } from 'axios';
 import { APIRoute } from '../const';
 import { Promo } from '../types/promo';
 import { generatePath } from 'react-router-dom';
-import { Review } from '../types/review';
+import { Review, ReviewPost } from '../types/review';
 
 export const fetchCamerasAction = createAsyncThunk<Camera[], undefined, {
   dispatch: AppDispatch;
@@ -63,6 +63,18 @@ export const fetchReviewsAction = createAsyncThunk<Review[], string, {
   'DATA/fetchReviews',
   async (cameraId, {extra: api}) => {
     const {data} = await api.get<Review[]>(generatePath(APIRoute.Reviews, {cameraId: cameraId}));
+    return data;
+  }
+);
+
+export const postReviewAction = createAsyncThunk<Review, ReviewPost, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'DATA/postReview',
+  async ({cameraId, userName, advantage, disadvantage, review, rating}, {extra: api}) => {
+    const {data} = await api.post<Review>(APIRoute.ReviewPost, {cameraId, userName, advantage, disadvantage, review, rating});
     return data;
   }
 );

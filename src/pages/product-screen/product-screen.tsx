@@ -17,7 +17,7 @@ import { getSimilarProducts,
 } from '../../store/similar/similar.selectors';
 import { getReviews } from '../../store/reviews/reviews.selectors';
 import ModalBuyProduct from '../../components/modal-buy-product/modal-buy-product';
-
+import ModalFormReview from '../../components/modal-form-review/modal-form-review';
 
 function ProductScreen(): JSX.Element {
   const {cameraId} = useParams();
@@ -32,12 +32,11 @@ function ProductScreen(): JSX.Element {
   const reviews = useAppSelector(getReviews);
 
   const [isModalActive, setIsModalACtive] = useState(false);
-  // const [currentCamera, setCurrentCamera] = useState<number>();
   const activeCameraModal = useAppSelector(getActiveCameraModal);
 
+  const [isFormModalActive, setIsFormModalActive] = useState(false);
 
   const [isActive, setIsActive] = useState<boolean>(true);
-  // const [activeSlice, setActiveSlice] = useState(0);
 
   useEffect(() => {
     if (cameraId) {
@@ -137,10 +136,12 @@ function ProductScreen(): JSX.Element {
             {similarProducts.length > 0 && <SimilarProducts similars={similarProducts} setIsModalActive={setIsModalACtive} />}
           </div>
           <div className="page-content__section">
-            {reviews.length > 0 && <ReviewBlock reviews={reviews} /> }
+            {reviews.length > 0 && <ReviewBlock reviews={reviews} setIsModalActive={setIsFormModalActive} /> }
           </div>
         </div>
-        {activeCameraModal && <ModalBuyProduct isActive={isModalActive} setIsModalActive={setIsModalACtive} camera={activeCameraModal} />}
+        {activeCameraModal &&
+          <ModalBuyProduct isActive={isModalActive} setIsModalActive={setIsModalACtive} camera={activeCameraModal} />}
+        <ModalFormReview isActive={isFormModalActive} setIsModalActive={setIsFormModalActive} />
       </main>
       <Link className="up-btn" to="#header"
         onClick={() => {

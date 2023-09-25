@@ -51,4 +51,12 @@ export enum CouponType {
   'camera-555' = 'camera-555',
 }
 
-export const RATING = [1, 2, 3, 4, 5];
+export const RATING_VALUES = [1, 2, 3, 4, 5];
+
+export const TITLE_RATING_VALUES = [
+  'Отлично',
+  'Хорошо',
+  'Нормально',
+  'Плохо',
+  'Ужасно'
+] as const;

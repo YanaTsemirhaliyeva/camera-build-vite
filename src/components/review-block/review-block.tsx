@@ -4,9 +4,10 @@ import ReviewItem from '../review-item/review-item';
 
 type ReviewsBlockProps = {
   reviews: Review[];
+  setIsModalActive: (arg: boolean) => void;
 }
 
-function ReviewBlock({reviews}: ReviewsBlockProps): JSX.Element {
+function ReviewBlock({reviews, setIsModalActive}: ReviewsBlockProps): JSX.Element {
   const reviewsSortedByTime = reviews && [...reviews].sort((a, b) => Date.parse(b.createAt) - Date.parse(a.createAt));
   const [activeSlice, setActiveSlice] = useState(3);
 
@@ -16,7 +17,11 @@ function ReviewBlock({reviews}: ReviewsBlockProps): JSX.Element {
       <div className="container">
         <div className="page-content__headed">
           <h2 className="title title--h3">Отзывы</h2>
-          <button className="btn" type="button">Оставить свой отзыв</button>
+          <button className="btn" type="button"
+            onClick={() => setIsModalActive(true)}
+          >
+            Оставить свой отзыв
+          </button>
         </div>
         <ul className="review-block__list">
           {reviews.length > 0 && reviewsSortedByTime.slice(0, activeSlice).map((review) => <ReviewItem key={review.id} reviewItem={review} />)}
