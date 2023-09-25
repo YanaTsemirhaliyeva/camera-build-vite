@@ -14,6 +14,7 @@ export type CameraData = {
   isCameraItemDataLoading: boolean;
   hasError: boolean;
   activePage: number;
+  activeCameraModal: Camera | undefined;
 };
 
 export type PromoData = {

@@ -10,6 +10,7 @@ const initialState: CameraData = {
   isCameraItemDataLoading: false,
   hasError: false,
   activePage: 1,
+  activeCameraModal: undefined,
 };
 
 export const cameras = createSlice({
@@ -18,6 +19,9 @@ export const cameras = createSlice({
   reducers: {
     setActivePage: (state, action: PayloadAction<number>) => {
       state.activePage = action.payload;
+    },
+    setActiveCameraModal: (state, action: PayloadAction<number>) => {
+      state.activeCameraModal = state.cameras.slice().find((camera) => camera.id === action.payload);
     }
   },
   extraReducers(builder) {
@@ -45,4 +49,4 @@ export const cameras = createSlice({
   },
 });
 
-export const { setActivePage } = cameras.actions;
+export const { setActivePage, setActiveCameraModal } = cameras.actions;

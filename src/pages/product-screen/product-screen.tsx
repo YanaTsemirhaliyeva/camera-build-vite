@@ -5,7 +5,7 @@ import ReviewBlock from '../../components/review-block/review-block';
 import SimilarProducts from '../../components/similar-products/similar-products';
 import { AppRoute } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { getCameraItem, isCameraItemStatusLoading } from '../../store/cameras/cameras.selectors';
+import { getActiveCameraModal, getCameraItem, isCameraItemStatusLoading } from '../../store/cameras/cameras.selectors';
 import { useEffect, useState } from 'react';
 import { fetchCameraItemAction, fetchReviewsAction, fetchSimilarProductsAction } from '../../store/api-actions';
 import Spinner from '../../components/spinner/spinner';
@@ -16,6 +16,7 @@ import { getSimilarProducts,
   // isSimilarProductsLoading
 } from '../../store/similar/similar.selectors';
 import { getReviews } from '../../store/reviews/reviews.selectors';
+import ModalBuyProduct from '../../components/modal-buy-product/modal-buy-product';
 
 
 function ProductScreen(): JSX.Element {
@@ -29,6 +30,10 @@ function ProductScreen(): JSX.Element {
   // const isSimilarDataLoading = useAppSelector(isSimilarProductsLoading);
 
   const reviews = useAppSelector(getReviews);
+
+  const [isModalActive, setIsModalACtive] = useState(false);
+  // const [currentCamera, setCurrentCamera] = useState<number>();
+  const activeCameraModal = useAppSelector(getActiveCameraModal);
 
 
   const [isActive, setIsActive] = useState<boolean>(true);
@@ -129,12 +134,13 @@ function ProductScreen(): JSX.Element {
             </section>
           </div>
           <div className="page-content__section">
-            {similarProducts.length > 0 && <SimilarProducts similars={similarProducts} />}
+            {similarProducts.length > 0 && <SimilarProducts similars={similarProducts} setIsModalActive={setIsModalACtive} />}
           </div>
           <div className="page-content__section">
             {reviews.length > 0 && <ReviewBlock reviews={reviews} /> }
           </div>
         </div>
+        {activeCameraModal && <ModalBuyProduct isActive={isModalActive} setIsModalActive={setIsModalACtive} camera={activeCameraModal} />}
       </main>
       <Link className="up-btn" to="#header"
         onClick={() => {

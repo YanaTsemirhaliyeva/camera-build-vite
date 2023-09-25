@@ -3,15 +3,20 @@ import { Camera } from '../../types/camera';
 import RatingStars from '../rating-stars/rating-stars';
 import { AppRoute } from '../../const';
 import { CSSProperties } from 'react';
+import { useAppDispatch } from '../../hooks';
+import { setActiveCameraModal } from '../../store/cameras/cameras.slice';
 
 type SimilarCardProps = {
   card: Camera;
   style: CSSProperties;
+  setIsModalActive: (arg: boolean) => void;
 }
 
-function SimilarCard({card, style}: SimilarCardProps): JSX.Element {
+function SimilarCard({card, style, setIsModalActive}: SimilarCardProps): JSX.Element {
 
   const {id, name, price, rating, reviewCount, previewImg, previewImg2x, previewImgWebp, previewImgWebp2x} = card;
+  const dispatch = useAppDispatch();
+
   const sourceSrcSet = `../${previewImgWebp}, ../${previewImgWebp2x} 2x`;
   const imgSrcSet = `../${previewImg2x} 2x`;
   const imgPreview = `../${previewImg}`;
@@ -35,7 +40,13 @@ function SimilarCard({card, style}: SimilarCardProps): JSX.Element {
         </p>
       </div>
       <div className="product-card__buttons">
-        <button className="btn btn--purple product-card__btn" type="button">Купить
+        <button className="btn btn--purple product-card__btn" type="button"
+          onClick={() => {
+            setIsModalActive(true);
+            dispatch(setActiveCameraModal(id));
+          }}
+        >
+          Купить
         </button>
         <Link className="btn btn--transparent" to={`${AppRoute.Product}/${id}`}>Подробнее</Link>
       </div>

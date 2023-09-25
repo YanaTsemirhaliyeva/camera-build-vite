@@ -30,8 +30,8 @@ function ModalBuyProduct({isActive, setIsModalActive, camera}: ModalBuyProductPr
   }, [isActive, onEscapeKeydown]);
 
   const {name, type, level, vendorCode, price, previewImg, previewImg2x, previewImgWebp, previewImgWebp2x} = camera;
-  const sourceSrcSet = `${previewImgWebp}, ${previewImgWebp2x} 2x`;
-  const imgSrcSet = `${previewImg2x} 2x`;
+  const sourceSrcSet = `../${previewImgWebp}, ../${previewImgWebp2x} 2x`;
+  const imgSrcSet = `../${previewImg2x} 2x`;
 
   return (
     <div className={classNames({'is-active': isActive}, 'modal')}
@@ -45,7 +45,7 @@ function ModalBuyProduct({isActive, setIsModalActive, camera}: ModalBuyProductPr
             <div className="basket-item__img">
               <picture>
                 <source type="image/webp" srcSet={sourceSrcSet} />
-                <img src={previewImg} srcSet={imgSrcSet} width="140" height="120" alt={name} />
+                <img src={`../${previewImg}`} srcSet={imgSrcSet} width="140" height="120" alt={name} />
               </picture>
             </div>
             <div className="basket-item__description">
