@@ -1,19 +1,44 @@
-import { Link, useLocation } from 'react-router-dom';
-import { useAppDispatch } from '../../hooks';
+import { Link, useLocation, useSearchParams } from 'react-router-dom';
+import { useMemo, useState, useEffect } from 'react';
+import { QueryParams } from '../../types/query-params';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { setActivePage } from '../../store/cameras/cameras.slice';
-import { useMemo, useState } from 'react';
 import { ITEMS_PER_PAGE, MAX_PAGES_COUNT_PER_PAGE } from '../../const';
+import { getActivePageNumber } from '../../store/cameras/cameras.selectors';
 
 type PaginationProps = {
   totalCountCameras: number;
-  currentPage: number;
 }
 
-function Pagination({totalCountCameras, currentPage}: PaginationProps): JSX.Element {
+function Pagination({totalCountCameras}: PaginationProps): JSX.Element {
   const dispatch = useAppDispatch();
-  const pageCount = Math.ceil(totalCountCameras / ITEMS_PER_PAGE);
   const location = useLocation();
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const activePage = useAppSelector(getActivePageNumber);
+  const currentPage = Number(searchParams.get('page'));
+  const pageCount = Math.ceil(totalCountCameras / ITEMS_PER_PAGE);
+
+  const currentParams = useMemo(() => {
+    const params: QueryParams = {};
+    if (activePage) {
+      params.page = activePage.toString();
+    }
+    return params;
+  }, [activePage]);
+
+  useEffect(() => {
+    if(currentPage && Number(currentPage) <= pageCount) {
+      dispatch(setActivePage(Number(currentPage)));
+    }
+  }, [currentPage, dispatch, pageCount]);
+
+  useEffect(() => {
+    setSearchParams(currentParams);
+  }, [setSearchParams, currentParams]);
+
   let page = Number(location.search.split('=')[1]);
+
   if (isNaN(page)) {
     page = currentPage;
   }
