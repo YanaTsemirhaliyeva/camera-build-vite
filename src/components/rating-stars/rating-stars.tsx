@@ -10,7 +10,7 @@ function RatingStars({rating}: RatingStarsProps): JSX.Element {
       {RATING_VALUES.map((item) => {
         const href = item <= rating ? '#icon-full-star' : '#icon-star';
         return(
-          <svg width="17" height="16" aria-hidden="true" key={item}>
+          <svg width="17" height="16" aria-hidden="true" key={item} data-testid='rating-star'>
             <use xlinkHref={href}></use>
           </svg>);
       })}

@@ -48,7 +48,7 @@ function Header(): JSX.Element {
             </svg><span className="visually-hidden">Сбросить поиск</span>
           </button>
         </div>
-        <Link className="header__basket-link" to={AppRoute.Basket}>
+        <Link className="header__basket-link" to={AppRoute.Basket} data-testid='header-basket'>
           <svg width="16" height="16" aria-hidden="true">
             <use xlinkHref="#icon-basket"></use>
           </svg><span className="header__basket-count">3</span>

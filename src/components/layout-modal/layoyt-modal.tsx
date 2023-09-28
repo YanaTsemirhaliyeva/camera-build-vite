@@ -33,6 +33,7 @@ function LayoutModal({children, isActive, setIsModalActive}: LayoutModalProps): 
     <FocusLock returnFocus disabled={!isActive}>
       <div className={classNames({'is-active': isActive}, 'modal')}
         ref={modalRef}
+        data-testid='modal-container'
       >
         <div className="modal__wrapper">
           <div className="modal__overlay" onClick={() => setIsModalActive(false)}></div>

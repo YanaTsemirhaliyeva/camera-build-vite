@@ -26,7 +26,7 @@ function SimilarCard({card, style, setIsModalActive}: SimilarCardProps): JSX.Ele
       <div className="product-card__img">
         <picture>
           <source type="image/webp" srcSet={sourceSrcSet} />
-          <img src={imgPreview} srcSet={imgSrcSet} width="280" height="240" alt="Фотоаппарат FastShot MR-5" />
+          <img src={imgPreview} srcSet={imgSrcSet} width="280" height="240" alt={`Фотоаппарат ${name}`} />
         </picture>
       </div>
       <div className="product-card__info">

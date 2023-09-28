@@ -1,30 +1,30 @@
-import lcs from './spinner.module.css';
+import styles from './spinner.module.css';
 
 function Spinner(): JSX.Element {
   return (
-    <div className={lcs.el}>
-      <div className={lcs.container}>
-        <div className={lcs.wrapper}>
-          <div className={lcs.loader}>
-            <div className={lcs.dot}/>
+    <div className={styles.el}>
+      <div className={styles.container}>
+        <div className={styles.wrapper}>
+          <div className={styles.loader}>
+            <div className={styles.dot}/>
           </div>
-          <div className={lcs.loader}>
-            <div className={lcs.dot}/>
+          <div className={styles.loader}>
+            <div className={styles.dot}/>
           </div>
-          <div className={lcs.loader}>
-            <div className={lcs.dot}/>
+          <div className={styles.loader}>
+            <div className={styles.dot}/>
           </div>
-          <div className={lcs.loader}>
-            <div className={lcs.dot}/>
+          <div className={styles.loader}>
+            <div className={styles.dot}/>
           </div>
-          <div className={lcs.loader}>
-            <div className={lcs.dot}/>
+          <div className={styles.loader}>
+            <div className={styles.dot}/>
           </div>
-          <div className={lcs.loader}>
-            <div className={lcs.dot}/>
+          <div className={styles.loader}>
+            <div className={styles.dot}/>
           </div>
         </div>
-        <div className={lcs.text}>
+        <div className={styles.text}>
           Загрузка...
         </div>
       </div>

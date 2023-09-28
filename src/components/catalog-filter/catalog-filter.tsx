@@ -1,6 +1,6 @@
 function CatalogFilter(): JSX.Element {
   return (
-    <div className="catalog-filter">
+    <div className="catalog-filter" data-testid='catalog-filter'>
       <form action="#">
         <h2 className="visually-hidden">Фильтр</h2>
         <fieldset className="catalog-filter__block">

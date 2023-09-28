@@ -85,7 +85,7 @@ function Pagination({totalCountCameras}: PaginationProps): JSX.Element {
   const pagination = [...Array(pageCount).keys()].slice(firstSlice, secondSlice);
 
   return (
-    <div className="pagination">
+    <div className="pagination" data-testid='pagination'>
       <ul className="pagination__list">
         {page > MAX_PAGES_COUNT_PER_PAGE &&
         <li className="pagination__item">
@@ -110,6 +110,7 @@ function Pagination({totalCountCameras}: PaginationProps): JSX.Element {
             <Link
               className={`pagination__link ${page === item + 1 ? 'pagination__link--active' : ''}`}
               to='#'
+              data-testid='pagination-page'
             >
               {item + 1}
             </Link>

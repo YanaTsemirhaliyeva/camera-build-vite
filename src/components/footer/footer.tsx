@@ -41,7 +41,7 @@ function Footer(): JSX.Element {
             <p className="footer__title">Навигация</p>
             <ul className="footer__list">
               <li className="footer__item">
-                <Link className="link" to={AppRoute.Index}>Каталог</Link>
+                <Link className="link" to={AppRoute.Index} data-testid='footer-link-main'>Каталог</Link>
               </li>
               <li className="footer__item">
                 <Link className="link" to="#">Гарантии</Link>

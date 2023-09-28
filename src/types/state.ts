@@ -1,3 +1,4 @@
+import { Status } from '../const';
 import { store } from '../store';
 import { Camera } from './camera';
 import { Promo } from './promo';
@@ -30,4 +31,5 @@ export type SimilarData = {
 export type ReviewsData = {
   reviews: Review[];
   isReviewsDataLoading: boolean;
+  status: Status;
 };

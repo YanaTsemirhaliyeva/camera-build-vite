@@ -4,7 +4,7 @@ import CatalogSort from '../../components/catalog-sort/catalog-sort';
 import Layout from '../../components/layout/layout';
 import Pagination from '../../components/pagination/pagination';
 import ProductCard from '../../components/product-card/product-card';
-import SwiperPromo from '../../components/swiper/swiper';
+import SwiperPromo from '../../components/swiper-promo/swiper-promo';
 import { AppRoute, ITEMS_PER_PAGE } from '../../const';
 import { useAppSelector } from '../../hooks';
 import { getActivePageNumber, getCameras } from '../../store/cameras/cameras.selectors';

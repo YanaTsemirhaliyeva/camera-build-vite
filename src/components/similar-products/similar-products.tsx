@@ -28,7 +28,7 @@ function SimilarProducts({similars, setIsModalActive}: SimilarProductsProps): JS
               }}
             >
               {similars.map((camera) => (
-                <SwiperSlide key={camera.id}>
+                <SwiperSlide key={camera.vendorCode}>
                   <SimilarCard card={camera} style={{width: '100%', margin: 0}} setIsModalActive={setIsModalActive} />
                 </SwiperSlide>
               ))}

@@ -12,9 +12,7 @@ import Spinner from '../../components/spinner/spinner';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
 import RatingStars from '../../components/rating-stars/rating-stars';
 import classNames from 'classnames';
-import { getSimilarProducts,
-  // isSimilarProductsLoading
-} from '../../store/similar/similar.selectors';
+import { getSimilarProducts, isSimilarProductsLoading } from '../../store/similar/similar.selectors';
 import { getReviews } from '../../store/reviews/reviews.selectors';
 import ModalBuyProduct from '../../components/modal-buy-product/modal-buy-product';
 import ModalFormReview from '../../components/modal-form-review/modal-form-review';
@@ -27,7 +25,7 @@ function ProductScreen(): JSX.Element {
   const isDataProductLoading = useAppSelector(isCameraItemStatusLoading);
 
   const similarProducts = useAppSelector(getSimilarProducts);
-  // const isSimilarDataLoading = useAppSelector(isSimilarProductsLoading);
+  const isSimilarDataLoading = useAppSelector(isSimilarProductsLoading);
 
   const reviews = useAppSelector(getReviews);
 
@@ -46,7 +44,7 @@ function ProductScreen(): JSX.Element {
     }
   }, [cameraId, dispatch]);
 
-  if (isDataProductLoading) {
+  if (isDataProductLoading || isSimilarDataLoading) {
     return <Spinner />;
   }
 
@@ -63,8 +61,8 @@ function ProductScreen(): JSX.Element {
     <Layout pageTitle="Карточка товара">
       <main>
         <div className="page-content">
-          <Breadcrumbs page={AppRoute.Product} cameraTitle={name} />
-          <div className="page-content__section">
+          <Breadcrumbs page={AppRoute.Product} breadCrumb={name} />
+          <div className="page-content__section" data-testid='camera-item'>
             <section className="product">
               <div className="container">
                 <div className="product__img">
@@ -132,10 +130,10 @@ function ProductScreen(): JSX.Element {
               </div>
             </section>
           </div>
-          <div className="page-content__section">
+          <div className="page-content__section" data-testid='similars'>
             {similarProducts.length > 0 && <SimilarProducts similars={similarProducts} setIsModalActive={setIsModalACtive} />}
           </div>
-          <div className="page-content__section">
+          <div className="page-content__section" data-testid='reviews'>
             {reviews.length > 0 && <ReviewBlock reviews={reviews} setIsModalActive={setIsFormModalActive} /> }
           </div>
         </div>
@@ -143,7 +141,7 @@ function ProductScreen(): JSX.Element {
           <ModalBuyProduct isActive={isModalActive} setIsModalActive={setIsModalACtive} camera={activeCameraModal} />}
         <ModalFormReview isActive={isFormModalActive} setIsModalActive={setIsFormModalActive} />
       </main>
-      <Link className="up-btn" to="#header"
+      <Link className="up-btn" to="#header" data-testid='scroll'
         onClick={() => {
           window.scrollTo({
             top: 0,

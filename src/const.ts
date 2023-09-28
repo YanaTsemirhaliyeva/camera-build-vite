@@ -60,3 +60,11 @@ export const TITLE_RATING_VALUES = [
   'Плохо',
   'Ужасно'
 ] as const;
+
+
+export enum Status {
+  Idle = 'idle',
+  Loading = 'loading',
+  Success = 'success',
+  Error = 'error'
+}

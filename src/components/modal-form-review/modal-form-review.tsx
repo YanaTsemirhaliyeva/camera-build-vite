@@ -54,6 +54,7 @@ function ModalFormReview({isActive, setIsModalActive}: ModalFormReviewProps): JS
                         id={`star-${item}`} type="radio"
                         value={item}
                         {...register('rating', {required: true})}
+                        data-testid='star-rating'
                       />
                       <label className="rate__label" htmlFor={`star-${item}`} title={TITLE_RATING_VALUES[item]}></label>
                     </Fragment>

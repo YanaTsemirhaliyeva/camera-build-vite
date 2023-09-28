@@ -5,7 +5,7 @@ import { Autoplay, Pagination } from 'swiper/modules';
 import { useAppSelector } from '../../hooks';
 import { getPromo } from '../../store/promo/promo.selectors';
 import Banner from '../banner/banner';
-import './swiper.css';
+import './swiper-promo.css';
 
 function SwiperPromo(): JSX.Element {
 
@@ -24,7 +24,7 @@ function SwiperPromo(): JSX.Element {
       className="mySwiper"
     >
       {promoList.length > 0 && promoList.map((item) => (
-        <SwiperSlide key={item.id}>
+        <SwiperSlide key={item.id} data-testid='swiper'>
           <Banner promoItem={item} />
         </SwiperSlide>
       ))}
