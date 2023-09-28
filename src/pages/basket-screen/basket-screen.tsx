@@ -29,7 +29,9 @@ function BasketScreen(): JSX.Element {
                       <li className="basket-item__list-item">Любительский уровень</li>
                     </ul>
                   </div>
-                  <p className="basket-item__price"><span className="visually-hidden">Цена:</span>18 970 ₽</p>
+                  <p className="basket-item__price">
+                    <span className="visually-hidden">Цена:</span>18 970 ₽
+                  </p>
                   <div className="quantity">
                     <button className="btn-icon btn-icon--prev" aria-label="уменьшить количество товара">
                       <svg width="7" height="12" aria-hidden="true">
@@ -37,14 +39,16 @@ function BasketScreen(): JSX.Element {
                       </svg>
                     </button>
                     <label className="visually-hidden" htmlFor="counter1"></label>
-                    <input type="number" id="counter1" value="2" min="1" max="99" aria-label="количество товара" />
+                    <input type="number" id="counter1" defaultValue="2" min="1" max="99" aria-label="количество товара" />
                     <button className="btn-icon btn-icon--next" aria-label="увеличить количество товара">
                       <svg width="7" height="12" aria-hidden="true">
                         <use xlinkHref="#icon-arrow"></use>
                       </svg>
                     </button>
                   </div>
-                  <div className="basket-item__total-price"><span className="visually-hidden">Общая цена:</span>37 940 ₽</div>
+                  <div className="basket-item__total-price">
+                    <span className="visually-hidden">Общая цена:</span>37 940 ₽
+                  </div>
                   <button className="cross-btn" type="button" aria-label="Удалить товар">
                     <svg width="10" height="10" aria-hidden="true">
                       <use xlinkHref="#icon-close"></use>
@@ -75,7 +79,7 @@ function BasketScreen(): JSX.Element {
                       </svg>
                     </button>
                     <label className="visually-hidden" htmlFor="counter2"></label>
-                    <input type="number" id="counter2" value="1" min="1" max="99" aria-label="количество товара" />
+                    <input type="number" id="counter2" defaultValue="1" min="1" max="99" aria-label="количество товара" />
                     <button className="btn-icon btn-icon--next" aria-label="увеличить количество товара">
                       <svg width="7" height="12" aria-hidden="true">
                         <use xlinkHref="#icon-arrow"></use>
@@ -96,7 +100,8 @@ function BasketScreen(): JSX.Element {
                   <div className="basket-form">
                     <form action="#">
                       <div className="custom-input">
-                        <label><span className="custom-input__label">Промокод</span>
+                        <label>
+                          <span className="custom-input__label">Промокод</span>
                           <input type="text" name="promo" placeholder="Введите промокод" />
                         </label>
                         <p className="custom-input__error">Промокод неверный</p>
@@ -108,9 +113,18 @@ function BasketScreen(): JSX.Element {
                   </div>
                 </div>
                 <div className="basket__summary-order">
-                  <p className="basket__summary-item"><span className="basket__summary-text">Всего:</span><span className="basket__summary-value">111 390 ₽</span></p>
-                  <p className="basket__summary-item"><span className="basket__summary-text">Скидка:</span><span className="basket__summary-value basket__summary-value--bonus">0 ₽</span></p>
-                  <p className="basket__summary-item"><span className="basket__summary-text basket__summary-text--total">К оплате:</span><span className="basket__summary-value basket__summary-value--total">111 390 ₽</span></p>
+                  <p className="basket__summary-item">
+                    <span className="basket__summary-text">Всего:</span>
+                    <span className="basket__summary-value">111 390 ₽</span>
+                  </p>
+                  <p className="basket__summary-item">
+                    <span className="basket__summary-text">Скидка:</span>
+                    <span className="basket__summary-value basket__summary-value--bonus">0 ₽</span>
+                  </p>
+                  <p className="basket__summary-item">
+                    <span className="basket__summary-text basket__summary-text--total">К оплате:</span>
+                    <span className="basket__summary-value basket__summary-value--total">111 390 ₽</span>
+                  </p>
                   <button className="btn btn--purple" type="submit">Оформить заказ
                   </button>
                 </div>

@@ -16,6 +16,9 @@ import { getSimilarProducts, isSimilarProductsLoading } from '../../store/simila
 import { getReviews } from '../../store/reviews/reviews.selectors';
 import ModalBuyProduct from '../../components/modal-buy-product/modal-buy-product';
 import ModalFormReview from '../../components/modal-form-review/modal-form-review';
+import { dropCameraItem } from '../../store/cameras/cameras.slice';
+import { dropReviews } from '../../store/reviews/reviews.slice';
+import { dropSimilar } from '../../store/similar/similar.slice';
 
 function ProductScreen(): JSX.Element {
   const {cameraId} = useParams();
@@ -42,6 +45,13 @@ function ProductScreen(): JSX.Element {
       dispatch(fetchSimilarProductsAction(cameraId));
       dispatch(fetchReviewsAction(cameraId));
     }
+
+    return () => {
+      dispatch(dropCameraItem());
+      dispatch(dropReviews());
+      dispatch(dropSimilar());
+    };
+
   }, [cameraId, dispatch]);
 
   if (isDataProductLoading || isSimilarDataLoading) {

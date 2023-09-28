@@ -15,7 +15,7 @@ function ProductCard({camera, setIsModalActive, setCurrentCamera}: ProductCardPr
   const sourceSrcSet = `${previewImgWebp}, ${previewImgWebp2x} 2x`;
   const imgSrcSet = `${previewImg2x} 2x`;
 
-  const onButtonBuyClick = () => {
+  const handleButtonBuyClick = () => {
     setCurrentCamera(id);
     setIsModalActive(true);
   };
@@ -41,7 +41,7 @@ function ProductCard({camera, setIsModalActive, setCurrentCamera}: ProductCardPr
       </div>
       <div className="product-card__buttons">
         <button className="btn btn--purple product-card__btn" type="button"
-          onClick={onButtonBuyClick}
+          onClick={handleButtonBuyClick}
         >
           Купить
         </button>

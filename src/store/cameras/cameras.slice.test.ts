@@ -1,3 +1,4 @@
+import { Status } from '../../const';
 import { makeFakeCameraItem, makeFakeCameraList } from '../../utils-for-test/mocks';
 import { fetchCameraItemAction, fetchCamerasAction } from '../api-actions';
 import { cameras } from './cameras.slice';
@@ -11,6 +12,7 @@ describe('Cameras Slice', () => {
     hasError: false,
     activePage: 1,
     activeCameraModal: undefined,
+    status: Status.Idle
   };
   const emptyAction = {type: ''};
 
@@ -35,6 +37,7 @@ describe('Cameras Slice', () => {
       const expectedState = {
         ...initialState,
         isCamerasDataLoading: true,
+        status: Status.Loading,
       };
 
       const result = cameras.reducer(undefined, fetchCamerasAction.pending);
@@ -47,6 +50,7 @@ describe('Cameras Slice', () => {
       const expectedState = {
         ...initialState,
         cameras: [...mockCameras],
+        status: Status.Success,
       };
 
       const result = cameras.reducer(
@@ -59,7 +63,10 @@ describe('Cameras Slice', () => {
     });
 
     it('should set "isCamerasDataLoading" to "false" with "fetchCamerasAction.rejected', () => {
-      const expectedState = {...initialState};
+      const expectedState = {
+        ...initialState,
+        status: Status.Error
+      };
 
       const result = cameras.reducer(
         undefined,

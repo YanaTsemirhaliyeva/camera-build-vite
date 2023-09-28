@@ -1,3 +1,4 @@
+import { Status } from '../../const';
 import { makeFakePromoList } from '../../utils-for-test/mocks';
 import { fetchPromoAction } from '../api-actions';
 import { promo } from './promo.slice';
@@ -7,6 +8,7 @@ describe('Promo Slice', () => {
   const initialState = {
     promo: [],
     isPromoDataLoading: false,
+    status: Status.Idle,
   };
 
   it('should return initial state with empty action', () => {
@@ -29,6 +31,7 @@ describe('Promo Slice', () => {
     const expectedState = {
       ...initialState,
       isPromoDataLoading: true,
+      status: Status.Loading,
     };
 
     const result = promo.reducer(undefined, fetchPromoAction.pending);
@@ -40,7 +43,8 @@ describe('Promo Slice', () => {
     const mockPromos = makeFakePromoList();
     const expectedState = {
       ...initialState,
-      promo: [...mockPromos]
+      promo: [...mockPromos],
+      status: Status.Success,
     };
 
     const result = promo.reducer(
@@ -53,11 +57,14 @@ describe('Promo Slice', () => {
   });
 
   it('should set "isPromoDataLoading" to "false" with "fetchPromoAction.rejected', () => {
-    const expectedState = {...initialState};
+    const expectedState = {
+      ...initialState,
+      status: Status.Error
+    };
 
     const result = promo.reducer(
       undefined,
-      fetchPromoAction.rejected
+      fetchPromoAction.rejected,
     );
 
     expect(result).toEqual(expectedState);

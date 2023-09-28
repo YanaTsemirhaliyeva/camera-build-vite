@@ -1,12 +1,13 @@
-import { Fragment } from 'react';
-import { RATING_VALUES, TITLE_RATING_VALUES } from '../../const';
+import { ChangeEvent, Fragment, useState } from 'react';
+import { RATING_VALUES, Status, TITLE_RATING_VALUES } from '../../const';
 import LayoutModal from '../layout-modal/layoyt-modal';
 import { ReviewPost } from '../../types/review';
 import { useForm } from 'react-hook-form';
-import { useAppDispatch } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { useParams } from 'react-router-dom';
 import { postReviewAction } from '../../store/api-actions';
 import classNames from 'classnames';
+import { getPostReviewStatus } from '../../store/reviews/reviews.selectors';
 
 type ModalFormReviewProps = {
   isActive: boolean;
@@ -16,19 +17,29 @@ type ModalFormReviewProps = {
 function ModalFormReview({isActive, setIsModalActive}: ModalFormReviewProps): JSX.Element {
   const dispatch = useAppDispatch();
   const id = useParams().cameraId;
+  const isReviewDataPosting = useAppSelector(getPostReviewStatus) === Status.Loading;
+
+  const [reviewText, setReviewText] = useState({review: ''});
+
+  const handleReviewChange =
+    (evt: ChangeEvent<HTMLTextAreaElement>): void => {
+      const {name, value} = evt.target;
+      setReviewText({ ...reviewText, [name]: value});
+    };
 
   const {register, handleSubmit, formState: {errors}, reset} = useForm<ReviewPost>({
     defaultValues: {},
     mode: 'onSubmit'
   });
 
-  const onFormSubmit = (data: ReviewPost) => {
+  const handleFormSubmit = (data: ReviewPost) => {
     (async () => {
       const cameraId = Number(id);
       const rating = Number(data.rating);
       const action = await dispatch(postReviewAction({...data, cameraId, rating}));
       if (postReviewAction.fulfilled.match(action)) {
         setIsModalActive(false);
+        setReviewText({ ...reviewText, review: ''});
         reset();
       }
     })();
@@ -38,7 +49,7 @@ function ModalFormReview({isActive, setIsModalActive}: ModalFormReviewProps): JS
     <LayoutModal isActive={isActive} setIsModalActive={setIsModalActive}>
       <p className="title title--h4">Оставить отзыв</p>
       <div className="form-review">
-        <form method="post" onSubmit={handleSubmit(onFormSubmit)}>
+        <form method="post" onSubmit={handleSubmit(handleFormSubmit)}>
           <div className="form-review__rate">
             <fieldset className={classNames({'is-invalid': errors.rating}, 'rate form-review__item')}>
               <legend className="rate__caption">Рейтинг
@@ -113,7 +124,7 @@ function ModalFormReview({isActive, setIsModalActive}: ModalFormReviewProps): JS
                     <use xlinkHref="#icon-snowflake"></use>
                   </svg>
                 </span>
-                <textarea minLength={5} placeholder="Поделитесь своим опытом покупки"
+                <textarea placeholder="Поделитесь своим опытом покупки"
                   {...register('review', {
                     required: true,
 
@@ -126,15 +137,16 @@ function ModalFormReview({isActive, setIsModalActive}: ModalFormReviewProps): JS
                       message: 'Максимум 160 символов'
                     }
                   })}
+                  onChange={handleReviewChange}
                 >
                 </textarea>
               </label>
-              {/* {errors.review && <div className="custom-textarea__error">Нужно добавить комментарий</div>} */}
+              {reviewText.review.length === 0 && <div className="custom-textarea__error">Нужно добавить комментарий</div>}
               {errors.review && <div className="custom-textarea__error">{errors.review.message}</div>}
 
             </div>
           </div>
-          <button className="btn btn--purple form-review__btn" type="submit">
+          <button className="btn btn--purple form-review__btn" type="submit" disabled={isReviewDataPosting}>
             Отправить отзыв
           </button>
         </form>

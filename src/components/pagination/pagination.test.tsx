@@ -1,21 +1,26 @@
 import { withHistory, withStore } from '../../utils-for-test/mock-component';
 import { render, screen} from '@testing-library/react';
 import Pagination from './pagination';
+import { Status } from '../../const';
 
 describe('Component: Pagination', () => {
+  const initialState = {
+    CAMERAS: {
+      cameras: [],
+      isCamerasDataLoading: false,
+      cameraItem: null,
+      isCameraItemDataLoading: false,
+      hasError: false,
+      activePage: 1,
+      activeCameraModal: undefined,
+      status: Status.Idle,
+    }};
+
   it('should render correctly with 20 items', () => {
 
     const {withStoreComponent} = withStore(
       <Pagination totalCountCameras={20} />, {
-        CAMERAS: {
-          cameras: [],
-          isCamerasDataLoading: false,
-          cameraItem: null,
-          isCameraItemDataLoading: false,
-          hasError: false,
-          activePage: 1,
-          activeCameraModal: undefined,
-        },
+        CAMERAS: {...initialState.CAMERAS}
       });
 
     const preparedComponent = withHistory(withStoreComponent);
@@ -29,14 +34,9 @@ describe('Component: Pagination', () => {
     const {withStoreComponent} = withStore(
       <Pagination totalCountCameras={200} />, {
         CAMERAS: {
-          cameras: [],
-          isCamerasDataLoading: false,
-          cameraItem: null,
-          isCameraItemDataLoading: false,
-          hasError: false,
+          ...initialState.CAMERAS,
           activePage: 4,
-          activeCameraModal: undefined,
-        },
+        }
       });
 
     const preparedComponent = withHistory(withStoreComponent);

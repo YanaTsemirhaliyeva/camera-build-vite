@@ -70,10 +70,12 @@ export const makeFakeStore = (initialState?: Partial<State>): State => ({
     hasError: false,
     activePage: 1,
     activeCameraModal: undefined,
+    status: Status.Idle
   },
   PROMO: {
     promo: [],
     isPromoDataLoading: false,
+    status: Status.Idle,
   },
   SIMILAR: {
     similar: [],

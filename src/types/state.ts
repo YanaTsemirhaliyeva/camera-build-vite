@@ -16,11 +16,13 @@ export type CameraData = {
   hasError: boolean;
   activePage: number;
   activeCameraModal: Camera | undefined;
+  status: Status;
 };
 
 export type PromoData = {
   promo: Promo[];
   isPromoDataLoading: boolean;
+  status: Status;
 };
 
 export type SimilarData = {

@@ -11,7 +11,11 @@ const initialState: SimilarData = {
 export const similar = createSlice({
   name: NameSpace.Similar,
   initialState,
-  reducers: {},
+  reducers: {
+    dropSimilar: (state) => {
+      state.similar = [];
+    },
+  },
   extraReducers(builder) {
     builder
       .addCase(fetchSimilarProductsAction.pending, (state) => {
@@ -26,3 +30,5 @@ export const similar = createSlice({
       });
   },
 });
+
+export const { dropSimilar } = similar.actions;

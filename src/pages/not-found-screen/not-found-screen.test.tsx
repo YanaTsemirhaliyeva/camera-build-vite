@@ -2,7 +2,7 @@ import { withHistory, withStore } from '../../utils-for-test/mock-component';
 import { render, screen } from '@testing-library/react';
 import NotFoundScreen from './not-found-screen';
 import { makeFakeCameraList, makeFakePromoList } from '../../utils-for-test/mocks';
-import { AppRoute } from '../../const';
+import { AppRoute, Status } from '../../const';
 
 describe('Page: Not Found Screen', () => {
   const mockCameraList = makeFakeCameraList();
@@ -18,10 +18,12 @@ describe('Page: Not Found Screen', () => {
         hasError: false,
         activePage: 1,
         activeCameraModal: undefined,
+        status: Status.Idle
       },
       PROMO: {
         promo: [...mockPromoList],
         isPromoDataLoading: false,
+        status: Status.Idle
       },
     });
 

@@ -12,12 +12,16 @@ const initialState: ReviewsData = {
 export const reviews = createSlice({
   name: NameSpace.Reviews,
   initialState,
-  reducers: {},
+  reducers: {
+    dropReviews: (state) => {
+      state.reviews = [];
+    },
+  },
   extraReducers(builder) {
     builder
       .addCase(fetchReviewsAction.pending, (state) => {
         state.isReviewsDataLoading = true;
-        state.status = Status.Idle;
+        state.status = Status.Loading;
       })
       .addCase(fetchReviewsAction.fulfilled, (state, action) => {
         state.reviews = action.payload;
@@ -28,6 +32,9 @@ export const reviews = createSlice({
         state.isReviewsDataLoading = false;
         state.status = Status.Error;
       })
+      .addCase(postReviewAction.pending, (state) => {
+        state.status = Status.Loading;
+      })
       .addCase(postReviewAction.fulfilled, (state, action) => {
         state.reviews.unshift(action.payload);
         state.status = Status.Success;
@@ -37,3 +44,5 @@ export const reviews = createSlice({
       });
   },
 });
+
+export const { dropReviews } = reviews.actions;

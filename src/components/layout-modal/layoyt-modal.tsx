@@ -11,7 +11,7 @@ type LayoutModalProps = {
 function LayoutModal({children, isActive, setIsModalActive}: LayoutModalProps): JSX.Element {
   const modalRef = useRef(null);
 
-  const onEscapeKeydown = useCallback((evt: KeyboardEvent) => {
+  const handleEscapeKeydown = useCallback((evt: KeyboardEvent) => {
     if (evt.key === 'Escape') {
       setIsModalActive(false);
     }
@@ -20,14 +20,14 @@ function LayoutModal({children, isActive, setIsModalActive}: LayoutModalProps): 
   useEffect(() => {
     if (isActive && modalRef.current) {
       document.body.style.overflow = 'hidden';
-      document.addEventListener('keydown', onEscapeKeydown);
+      document.addEventListener('keydown', handleEscapeKeydown);
     }
 
     return () => {
       document.body.style.overflow = '';
-      document.removeEventListener('keydown', onEscapeKeydown);
+      document.removeEventListener('keydown', handleEscapeKeydown);
     };
-  }, [isActive, onEscapeKeydown]);
+  }, [isActive, handleEscapeKeydown]);
 
   return (
     <FocusLock returnFocus disabled={!isActive}>

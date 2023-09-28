@@ -4,13 +4,15 @@ import { fetchReviewsAction, postReviewAction } from '../api-actions';
 import { reviews } from './reviews.slice';
 
 describe('Reviews Slice', () => {
+  const emptyAction = {type: ''};
+  const initialState = {
+    reviews: [],
+    isReviewsDataLoading: false,
+    status: Status.Idle,
+  };
+
   it('should return initial state with empty action', () => {
-    const emptyAction = {type: ''};
-    const expectedState = {
-      reviews: [],
-      isReviewsDataLoading: false,
-      status: Status.Idle,
-    };
+    const expectedState = {...initialState};
 
     const result = reviews.reducer(expectedState, emptyAction);
 
@@ -18,23 +20,18 @@ describe('Reviews Slice', () => {
   });
 
   it('should return default initial state with empty action', () => {
-    const emptyAction = { type: '' };
-    const expectedState = {
-      reviews: [],
-      isReviewsDataLoading: false,
-      status: Status.Idle,
-    };
+    const expectedState = {...initialState};
 
     const result = reviews.reducer(undefined, emptyAction);
 
     expect(result).toEqual(expectedState);
   });
 
-  it('should set "isReviewsDataLoading" to "true" with "fetchReviewsAction.pending"', () => {
+  it('should set "isReviewsDataLoading" to "true" & status to "loading" with "fetchReviewsAction.pending"', () => {
     const expectedState = {
-      reviews: [],
+      ...initialState,
       isReviewsDataLoading: true,
-      status: Status.Idle,
+      status: Status.Loading,
     };
 
     const result = reviews.reducer(undefined, fetchReviewsAction.pending);
@@ -45,8 +42,8 @@ describe('Reviews Slice', () => {
   it('should set "reviews" to array with review, "isReviewsDataLoading" to "false" with "fetchReviewsAction.fulfilled"', () => {
     const mockReviews = makeFakeReviewList();
     const expectedState = {
+      ...initialState,
       reviews: mockReviews,
-      isReviewsDataLoading: false,
       status: Status.Success,
     };
 
@@ -61,8 +58,7 @@ describe('Reviews Slice', () => {
 
   it('should set "isReviewsDataLoading" to "false" with "fetchReviewsAction.rejected', () => {
     const expectedState = {
-      reviews: [],
-      isReviewsDataLoading: false,
+      ...initialState,
       status: Status.Error,
     };
 
@@ -79,20 +75,19 @@ describe('Reviews Slice', () => {
     const postReview = makeFakeReviewList()[0];
     const allReviews = [postReview, ...mockReviews];
 
-    const initialState = {
+    const initialStatePost = {
+      ...initialState,
       reviews: mockReviews,
-      isReviewsDataLoading: false,
-      status: Status.Idle
     };
 
     const expectedState = {
+      ...initialState,
       reviews: allReviews,
-      isReviewsDataLoading: false,
       status: Status.Success
     };
 
     const result = reviews.reducer(
-      initialState,
+      initialStatePost,
       { type: postReviewAction.fulfilled.type, payload: postReview }
     );
 

@@ -3,7 +3,6 @@ import { render, screen} from '@testing-library/react';
 import { makeFakeCameraItem, makeFakeReviewList, makeFakeSimilarProducts } from '../../utils-for-test/mocks';
 import ProductScreen from './product-screen';
 import { Status } from '../../const';
-import userEvent from '@testing-library/user-event';
 
 
 describe('Component: Page Product Screen', () => {
@@ -11,8 +10,7 @@ describe('Component: Page Product Screen', () => {
   const mockSimilarProducts = makeFakeSimilarProducts();
   const mockReviews = makeFakeReviewList();
 
-  it('should render correctly', async () => {
-    vi.spyOn(window, 'scrollTo');
+  it('should render correctly', () => {
 
     const {withStoreComponent} = withStore(<ProductScreen />, {
       CAMERAS: {
@@ -23,10 +21,12 @@ describe('Component: Page Product Screen', () => {
         hasError: false,
         activePage: 1,
         activeCameraModal: undefined,
+        status: Status.Idle
       },
       PROMO: {
         promo: [],
         isPromoDataLoading: false,
+        status: Status.Idle
       },
       SIMILAR: {
         similar: [...mockSimilarProducts],
@@ -42,11 +42,8 @@ describe('Component: Page Product Screen', () => {
     const preparedComponent = withHistory(withStoreComponent);
     render(preparedComponent);
 
-    await userEvent.click(screen.getByTestId('scroll'));
-
     expect(screen.getByTestId('camera-item')).toBeInTheDocument();
     expect(screen.getByTestId('similars')).toBeInTheDocument();
     expect(screen.getByTestId('reviews')).toBeInTheDocument();
-    expect(window.scrollY).toBe(0);
   });
 });

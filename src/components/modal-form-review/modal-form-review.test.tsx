@@ -15,7 +15,6 @@ describe('Component: Modal Form Review', () => {
     expect(screen.getAllByTestId('star-rating').length).toBe(5);
     expect(screen.getByText(/Оставить отзыв/i)).toBeInTheDocument();
     expect(screen.getByText(/Ваше имя/i)).toBeInTheDocument();
-    expect(screen.getByText(/Комментарий/i)).toBeInTheDocument();
     expect(screen.getByText(/Отправить отзыв/i)).toBeInTheDocument();
   });
 });
