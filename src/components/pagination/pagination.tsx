@@ -68,6 +68,9 @@ function Pagination({totalCountCameras}: PaginationProps): JSX.Element {
   };
 
   const activeFirstSlice = useMemo(() => {
+    if (page === 0) {
+      return 0;
+    }
     if (page === 1) {
       return page - 1;
     }
