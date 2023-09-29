@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
+import { memo } from 'react';
 
 type BreadcrumbsProps = {
   page: AppRoute;
@@ -40,4 +41,5 @@ function Breadcrumbs({page, breadCrumb}: BreadcrumbsProps): JSX.Element {
   );
 }
 
-export default Breadcrumbs;
+const MemoBreadcrumbs = memo(Breadcrumbs);
+export default MemoBreadcrumbs;

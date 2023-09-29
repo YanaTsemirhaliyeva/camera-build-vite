@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import Layout from './layout';
+import MemoLayout from './layout';
 import { withHistory } from '../../utils-for-test/mock-component';
 
 describe('Component: Layout', () => {
@@ -11,7 +11,7 @@ describe('Component: Layout', () => {
   );
 
   it('should render correctly', () => {
-    const preparedComponent = withHistory(<Layout pageTitle=''>{children}</Layout>);
+    const preparedComponent = withHistory(<MemoLayout pageTitle=''>{children}</MemoLayout>);
 
     render(preparedComponent);
 

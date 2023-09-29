@@ -1,13 +1,13 @@
-import Breadcrumbs from '../../components/breadcrumbs/breadcrumbs';
-import Layout from '../../components/layout/layout';
+import MemoBreadcrumbs from '../../components/breadcrumbs/breadcrumbs';
+import MemoLayout from '../../components/layout/layout';
 import { AppRoute } from '../../const';
 
 function BasketScreen(): JSX.Element {
   return (
-    <Layout pageTitle="Корзина">
+    <MemoLayout pageTitle="Корзина">
       <main>
         <div className="page-content">
-          <Breadcrumbs page={AppRoute.Basket} breadCrumb='Корзина' />
+          <MemoBreadcrumbs page={AppRoute.Basket} breadCrumb='Корзина' />
 
           <section className="basket">
             <div className="container">
@@ -133,7 +133,7 @@ function BasketScreen(): JSX.Element {
           </section>
         </div>
       </main>
-    </Layout>
+    </MemoLayout>
   );
 }
 

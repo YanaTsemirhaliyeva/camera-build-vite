@@ -1,6 +1,6 @@
 import { withHistory, withStore } from '../../utils-for-test/mock-component';
 import { render, screen} from '@testing-library/react';
-import Footer from './footer';
+import MemoFooter from './footer';
 import { AppRoute } from '../../const';
 
 describe('Component: Footer', () => {
@@ -8,7 +8,7 @@ describe('Component: Footer', () => {
   it('should render correctly', () => {
 
     const {withStoreComponent} = withStore(
-      <Footer />, {});
+      <MemoFooter />, {});
 
     const preparedComponent = withHistory(withStoreComponent);
     render(preparedComponent);

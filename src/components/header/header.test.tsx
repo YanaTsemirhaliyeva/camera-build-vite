@@ -1,6 +1,6 @@
 import { withHistory, withStore } from '../../utils-for-test/mock-component';
 import { render, screen} from '@testing-library/react';
-import Header from './header';
+import MemoHeader from './header';
 import { AppRoute } from '../../const';
 
 describe('Component: Header', () => {
@@ -8,7 +8,7 @@ describe('Component: Header', () => {
   it('should render correctly', () => {
 
     const {withStoreComponent} = withStore(
-      <Header />, {});
+      <MemoHeader />, {});
 
     const preparedComponent = withHistory(withStoreComponent);
     render(preparedComponent);

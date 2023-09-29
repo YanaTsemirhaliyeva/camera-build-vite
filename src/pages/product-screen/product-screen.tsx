@@ -1,34 +1,28 @@
-import { Link, useLocation, useParams, useSearchParams } from 'react-router-dom';
-import Breadcrumbs from '../../components/breadcrumbs/breadcrumbs';
-import Layout from '../../components/layout/layout';
+import { Link, useParams } from 'react-router-dom';
+import MemoBreadcrumbs from '../../components/breadcrumbs/breadcrumbs';
+import MemoLayout from '../../components/layout/layout';
 import ReviewBlock from '../../components/review-block/review-block';
 import SimilarProducts from '../../components/similar-products/similar-products';
-import { AppRoute, ProductInfoURL } from '../../const';
+import { AppRoute } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { getActiveCameraModal, getCameraInfoActive, getCameraItem, isCameraItemStatusLoading } from '../../store/cameras/cameras.selectors';
-import { useEffect, useMemo, useState } from 'react';
+import { getActiveCameraModal, getCameraItem, isCameraItemStatusLoading } from '../../store/cameras/cameras.selectors';
+import { useEffect, useState } from 'react';
 import { fetchCameraItemAction, fetchReviewsAction, fetchSimilarProductsAction } from '../../store/api-actions';
 import Spinner from '../../components/spinner/spinner';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
-import RatingStars from '../../components/rating-stars/rating-stars';
-import classNames from 'classnames';
+import MemoRatingStars from '../../components/rating-stars/rating-stars';
 import { getSimilarProducts, isSimilarProductsLoading } from '../../store/similar/similar.selectors';
 import { getReviews } from '../../store/reviews/reviews.selectors';
 import ModalBuyProduct from '../../components/modal-buy-product/modal-buy-product';
 import ModalFormReview from '../../components/modal-form-review/modal-form-review';
-import { dropCameraItem, setCameraInfo } from '../../store/cameras/cameras.slice';
+import { dropCameraItem } from '../../store/cameras/cameras.slice';
 import { dropReviews } from '../../store/reviews/reviews.slice';
 import { dropSimilar } from '../../store/similar/similar.slice';
-import { QueryParams } from '../../types/query-params';
+import ProductTabs from '../../components/product-tabs/product-tabs';
 
 function ProductScreen(): JSX.Element {
   const {cameraId} = useParams();
   const dispatch = useAppDispatch();
-  const location = useLocation();
-  const [searchParams, setSearchParams] = useSearchParams();
-
-  const activeInfo = useAppSelector(getCameraInfoActive);
-  const currentInfo = searchParams.get('about');
 
   const currentProduct = useAppSelector(getCameraItem);
   const isDataProductLoading = useAppSelector(isCameraItemStatusLoading);
@@ -42,30 +36,6 @@ function ProductScreen(): JSX.Element {
   const activeCameraModal = useAppSelector(getActiveCameraModal);
 
   const [isFormModalActive, setIsFormModalActive] = useState(false);
-
-  const currentParams = useMemo(() => {
-    const params: QueryParams = {};
-    if (activeInfo) {
-      params.about = activeInfo;
-    }
-    return params;
-  }, [activeInfo]);
-
-  useEffect(() => {
-    if(currentInfo) {
-      dispatch(setCameraInfo(currentInfo as ProductInfoURL));
-    }
-  }, [currentInfo, dispatch]);
-
-  useEffect(() => {
-    setSearchParams(currentParams);
-  }, [setSearchParams, currentParams]);
-
-  let info = location.search.split('=')[1];
-  if (info === null || info === undefined) {
-    info = ProductInfoURL.Description;
-  }
-
 
   useEffect(() => {
     if (cameraId) {
@@ -91,15 +61,16 @@ function ProductScreen(): JSX.Element {
   }
 
   const {name, price, vendorCode, type, level, category, rating, reviewCount, previewImg, previewImg2x, previewImgWebp, previewImgWebp2x, description} = currentProduct;
-  const sourceSrcSet = `../${previewImgWebp}, ../${previewImgWebp2x} 2x`;
-  const imgSrcSet = `../${previewImg2x} 2x`;
-  const imgPreview = `../${previewImg}`;
+  const productInfo = {vendorCode, type, level, category, description};
+  const sourceSrcSet = `../../${previewImgWebp}, ../../${previewImgWebp2x} 2x`;
+  const imgSrcSet = `../../${previewImg2x} 2x`;
+  const imgPreview = `../../${previewImg}`;
 
   return (
-    <Layout pageTitle="Карточка товара">
+    <MemoLayout pageTitle="Карточка товара">
       <main>
         <div className="page-content">
-          <Breadcrumbs page={AppRoute.Product} breadCrumb={name} />
+          <MemoBreadcrumbs page={AppRoute.Product} breadCrumb={name} />
           <div className="page-content__section" data-testid='camera-item'>
             <section className="product">
               <div className="container">
@@ -112,7 +83,7 @@ function ProductScreen(): JSX.Element {
                 <div className="product__content">
                   <h1 className="title title--h3">{name}</h1>
                   <div className="rate product__rate">
-                    <RatingStars rating={rating} />
+                    <MemoRatingStars rating={rating} />
                     <p className="visually-hidden">Рейтинг: {rating}</p>
                     <p className="rate__count"><span className="visually-hidden">Всего оценок:</span>{reviewCount}</p>
                   </div>
@@ -122,48 +93,7 @@ function ProductScreen(): JSX.Element {
                       <use xlinkHref="#icon-add-basket"></use>
                     </svg>Добавить в корзину
                   </button>
-                  <div className="tabs product__tabs">
-                    <div className="tabs__controls product__tabs-controls">
-                      <button
-                        className={classNames({'is-active': info === ProductInfoURL.Characteristics}, 'tabs__control')}
-                        type="button"
-                        onClick={() => dispatch(setCameraInfo(ProductInfoURL.Characteristics))}
-                      >
-                        Характеристики
-                      </button>
-                      <button
-                        className={classNames({'is-active': info === ProductInfoURL.Description}, 'tabs__control')}
-                        type="button"
-                        onClick={() => dispatch(setCameraInfo(ProductInfoURL.Description))}
-                      >
-                        Описание
-                      </button>
-                    </div>
-                    <div className="tabs__content">
-                      <div className={classNames({'is-active': info === ProductInfoURL.Characteristics}, 'tabs__element')}>
-                        <ul className="product__tabs-list">
-                          <li className="item-list"><span className="item-list__title">Артикул:</span>
-                            <p className="item-list__text">{vendorCode}</p>
-                          </li>
-                          <li className="item-list"><span className="item-list__title">Категория:</span>
-                            <p className="item-list__text">{category}</p>
-                          </li>
-                          <li className="item-list"><span className="item-list__title">Тип камеры:</span>
-                            <p className="item-list__text">{type}</p>
-                          </li>
-                          <li className="item-list"><span className="item-list__title">Уровень:</span>
-                            <p className="item-list__text">{level}</p>
-                          </li>
-                        </ul>
-                      </div>
-                      <div className={classNames({'is-active': info === ProductInfoURL.Description}, 'tabs__element')}>
-                        <div className="product__tabs-text">
-                          <p>{description.split('.')[0]}.</p>
-                          {description.split('.').length > 1 && <p>{description.split('.').slice(1).join('.')}</p>}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                  <ProductTabs tabsInfo={productInfo} />
                 </div>
               </div>
             </section>
@@ -191,7 +121,7 @@ function ProductScreen(): JSX.Element {
           <use xlinkHref="#icon-arrow2"></use>
         </svg>
       </Link>
-    </Layout>
+    </MemoLayout>
   );
 }
 

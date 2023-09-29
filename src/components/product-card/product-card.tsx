@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { Camera } from '../../types/camera';
 import { AppRoute } from '../../const';
-import RatingStars from '../rating-stars/rating-stars';
+import MemoRatingStars from '../rating-stars/rating-stars';
 
 type ProductCardProps = {
   camera: Camera;
@@ -30,7 +30,7 @@ function ProductCard({camera, setIsModalActive, setCurrentCamera}: ProductCardPr
       </div>
       <div className="product-card__info">
         <div className="rate product-card__rate">
-          <RatingStars rating={rating} />
+          <MemoRatingStars rating={rating} />
           <p className="visually-hidden">Рейтинг: {rating}</p>
           <p className="rate__count"><span className="visually-hidden">Всего оценок:</span>{reviewCount}</p>
         </div>

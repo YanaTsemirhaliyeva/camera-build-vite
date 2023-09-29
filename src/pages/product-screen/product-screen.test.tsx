@@ -2,7 +2,7 @@ import { withHistory, withStore } from '../../utils-for-test/mock-component';
 import { render, screen} from '@testing-library/react';
 import { makeFakeCameraItem, makeFakeReviewList, makeFakeSimilarProducts } from '../../utils-for-test/mocks';
 import ProductScreen from './product-screen';
-import { ProductInfoURL, Status } from '../../const';
+import { Status } from '../../const';
 
 
 describe('Component: Page Product Screen', () => {
@@ -22,7 +22,6 @@ describe('Component: Page Product Screen', () => {
         activePage: 1,
         activeCameraModal: undefined,
         status: Status.Idle,
-        cameraInfo: ProductInfoURL.Description
       },
       PROMO: {
         promo: [],

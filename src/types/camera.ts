@@ -1,13 +1,16 @@
 import { CameraCategory, CameraLevel, CameraTypes } from '../const';
 import { Promo } from './promo';
 
-export type Camera = {
+export type CameraInfo = {
   vendorCode: string;
   type: CameraTypes;
+  level: CameraLevel;
   category: CameraCategory;
   description: string;
-  level: CameraLevel;
+}
+
+export type Camera = {
   price: number;
   rating: number;
   reviewCount: number;
-} & Promo;
+} & Promo & CameraInfo;

@@ -1,6 +1,6 @@
 
 import { Action } from 'redux';
-import { CameraCategory, CameraLevel, CameraTypes, ProductInfoURL, Status } from '../const';
+import { CameraCategory, CameraLevel, CameraTypes, Status } from '../const';
 import { Camera } from '../types/camera';
 import { faker } from '@faker-js/faker';
 import { State } from '../types/state';
@@ -70,8 +70,7 @@ export const makeFakeStore = (initialState?: Partial<State>): State => ({
     hasError: false,
     activePage: 1,
     activeCameraModal: undefined,
-    status: Status.Idle,
-    cameraInfo: ProductInfoURL.Description
+    status: Status.Idle
   },
   PROMO: {
     promo: [],

@@ -1,7 +1,7 @@
-import Breadcrumbs from '../../components/breadcrumbs/breadcrumbs';
+import MemoBreadcrumbs from '../../components/breadcrumbs/breadcrumbs';
 import CatalogFilter from '../../components/catalog-filter/catalog-filter';
 import CatalogSort from '../../components/catalog-sort/catalog-sort';
-import Layout from '../../components/layout/layout';
+import MemoLayout from '../../components/layout/layout';
 import Pagination from '../../components/pagination/pagination';
 import ProductCard from '../../components/product-card/product-card';
 import SwiperPromo from '../../components/swiper-promo/swiper-promo';
@@ -43,11 +43,11 @@ function CatalogScreen(): JSX.Element {
   const firstContentIndex = lastContentIndex - ITEMS_PER_PAGE;
 
   return (
-    <Layout pageTitle="Каталог">
+    <MemoLayout pageTitle="Каталог">
       <main>
         <SwiperPromo />
         <div className="page-content">
-          <Breadcrumbs page={AppRoute.Index} />
+          <MemoBreadcrumbs page={AppRoute.Index} />
           <section className="catalog">
             <div className="container">
               <h1 className="title title--h2">Каталог фото- и видеотехники</h1>
@@ -72,7 +72,7 @@ function CatalogScreen(): JSX.Element {
         </div>
         {activeCamera && <ModalBuyProduct isActive={isModalActive} setIsModalActive={setIsModalACtive} camera={activeCamera}/>}
       </main>
-    </Layout>
+    </MemoLayout>
   );
 }
 

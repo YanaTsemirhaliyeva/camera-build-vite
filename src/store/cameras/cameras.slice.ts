@@ -1,6 +1,6 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { CameraData } from '../../types/state';
-import { NameSpace, ProductInfoURL, Status } from '../../const';
+import { NameSpace, Status } from '../../const';
 import { fetchCameraItemAction, fetchCamerasAction } from '../api-actions';
 
 const initialState: CameraData = {
@@ -12,7 +12,6 @@ const initialState: CameraData = {
   activePage: 1,
   activeCameraModal: undefined,
   status: Status.Idle,
-  cameraInfo: ProductInfoURL.Description,
 };
 
 export const cameras = createSlice({
@@ -30,9 +29,6 @@ export const cameras = createSlice({
     },
     setCatalogStatus: (state, action: PayloadAction<Status>) => {
       state.status = action.payload;
-    },
-    setCameraInfo: (state, action: PayloadAction<ProductInfoURL>) => {
-      state.cameraInfo = action.payload;
     },
   },
   extraReducers(builder) {
@@ -63,4 +59,4 @@ export const cameras = createSlice({
   },
 });
 
-export const { setActivePage, setActiveCameraModal, dropCameraItem, setCatalogStatus, setCameraInfo } = cameras.actions;
+export const { setActivePage, setActiveCameraModal, dropCameraItem, setCatalogStatus } = cameras.actions;

@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { Camera } from '../../types/camera';
-import RatingStars from '../rating-stars/rating-stars';
+import MemoRatingStars from '../rating-stars/rating-stars';
 import { AppRoute } from '../../const';
 import { CSSProperties } from 'react';
 import { useAppDispatch } from '../../hooks';
@@ -17,9 +17,9 @@ function SimilarCard({card, style, setIsModalActive}: SimilarCardProps): JSX.Ele
   const {id, name, price, rating, reviewCount, previewImg, previewImg2x, previewImgWebp, previewImgWebp2x} = card;
   const dispatch = useAppDispatch();
 
-  const sourceSrcSet = `../${previewImgWebp}, ../${previewImgWebp2x} 2x`;
-  const imgSrcSet = `../${previewImg2x} 2x`;
-  const imgPreview = `../${previewImg}`;
+  const sourceSrcSet = `../../${previewImgWebp}, ../../${previewImgWebp2x} 2x`;
+  const imgSrcSet = `../../${previewImg2x} 2x`;
+  const imgPreview = `../../${previewImg}`;
 
   return (
     <div className="product-card is-active" style={style}>
@@ -31,7 +31,7 @@ function SimilarCard({card, style, setIsModalActive}: SimilarCardProps): JSX.Ele
       </div>
       <div className="product-card__info">
         <div className="rate product-card__rate">
-          <RatingStars rating={rating} />
+          <MemoRatingStars rating={rating} />
           <p className="visually-hidden">Рейтинг: {rating}</p>
           <p className="rate__count"><span className="visually-hidden">Всего оценок:</span>{reviewCount}</p>
         </div>

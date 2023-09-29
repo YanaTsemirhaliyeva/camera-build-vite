@@ -1,0 +1,37 @@
+import { withHistory, withStore } from '../../utils-for-test/mock-component';
+import { render, screen} from '@testing-library/react';
+import ProductTabs from './product-tabs';
+import { CameraCategory, CameraLevel, CameraTypes, Status } from '../../const';
+
+describe('Component: Rating Stars', () => {
+  const info = {
+    vendorCode: 'BVG78VB',
+    type: CameraTypes.Коллекционная,
+    level: CameraLevel.Нулевой,
+    category: CameraCategory.Видеокамера,
+    description: 'qwerty ytrewq'
+  };
+
+  it('should render correctly', () => {
+
+    const {withStoreComponent} = withStore(
+      <ProductTabs tabsInfo={info} />, {
+        CAMERAS: {
+          cameras: [],
+          isCamerasDataLoading: false,
+          cameraItem: null,
+          isCameraItemDataLoading: false,
+          hasError: false,
+          activePage: 1,
+          activeCameraModal: undefined,
+          status: Status.Idle,
+        },
+      });
+
+    const preparedComponent = withHistory(withStoreComponent);
+    render(preparedComponent);
+
+    expect(screen.getByText(/Характеристики/i)).toBeInTheDocument();
+    expect(screen.getByText(/Описание/i)).toBeInTheDocument();
+  });
+});

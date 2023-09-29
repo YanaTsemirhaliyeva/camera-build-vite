@@ -1,4 +1,4 @@
-import { NameSpace, ProductInfoURL, Status } from '../../const';
+import { NameSpace, Status } from '../../const';
 import { Camera } from '../../types/camera';
 import { State } from '../../types/state';
 
@@ -12,5 +12,3 @@ export const getActivePageNumber = (state: State): number => state[NameSpace.Cam
 export const getActiveCameraModal = (state: State): Camera | undefined => state[NameSpace.Cameras].activeCameraModal;
 
 export const getCamerasDataStatus = (state: State): Status => state[NameSpace.Cameras].status;
-
-export const getCameraInfoActive = (state: State): ProductInfoURL => state[NameSpace.Cameras].cameraInfo;

@@ -1,6 +1,6 @@
 import { withHistory, withStore } from '../../utils-for-test/mock-component';
 import { render, screen} from '@testing-library/react';
-import Breadcrumbs from './breadcrumbs';
+import MemoBreadcrumbs from './breadcrumbs';
 import { AppRoute } from '../../const';
 
 describe('Component: Breadcrumbs', () => {
@@ -10,7 +10,7 @@ describe('Component: Breadcrumbs', () => {
   it('should render correctly with AppRoute.Index', () => {
 
     const {withStoreComponent} = withStore(
-      <Breadcrumbs page={AppRoute.Index} />, {});
+      <MemoBreadcrumbs page={AppRoute.Index} />, {});
 
     const preparedComponent = withHistory(withStoreComponent);
     render(preparedComponent);
@@ -24,7 +24,7 @@ describe('Component: Breadcrumbs', () => {
   it('should render correctly with AppRoute.Basket', () => {
 
     const {withStoreComponent} = withStore(
-      <Breadcrumbs page={AppRoute.Basket} breadCrumb='Basket' />, {});
+      <MemoBreadcrumbs page={AppRoute.Basket} breadCrumb='Basket' />, {});
 
     const preparedComponent = withHistory(withStoreComponent);
     render(preparedComponent);

@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { RATING_VALUES } from '../../const';
 
 type RatingStarsProps = {
@@ -18,4 +19,5 @@ function RatingStars({rating}: RatingStarsProps): JSX.Element {
   );
 }
 
-export default RatingStars;
+const MemoRatingStars = memo(RatingStars);
+export default MemoRatingStars;

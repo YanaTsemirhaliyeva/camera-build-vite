@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
+import { memo } from 'react';
 
 function Header(): JSX.Element {
   return (
@@ -58,4 +59,5 @@ function Header(): JSX.Element {
   );
 }
 
-export default Header;
+const MemoHeader = memo(Header);
+export default MemoHeader;

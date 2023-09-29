@@ -1,4 +1,4 @@
-import { ProductInfoURL, Status } from '../../const';
+import { Status } from '../../const';
 import { makeFakeCameraItem, makeFakeCameraList } from '../../utils-for-test/mocks';
 import { fetchCameraItemAction, fetchCamerasAction } from '../api-actions';
 import { cameras } from './cameras.slice';
@@ -13,7 +13,6 @@ describe('Cameras Slice', () => {
     activePage: 1,
     activeCameraModal: undefined,
     status: Status.Idle,
-    cameraInfo: ProductInfoURL.Description
   };
   const emptyAction = {type: ''};
 

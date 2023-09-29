@@ -1,6 +1,7 @@
 import { Helmet } from 'react-helmet-async';
-import Header from '../header/header';
-import Footer from '../footer/footer';
+import MemoHeader from '../header/header';
+import MemoFooter from '../footer/footer';
+import { memo } from 'react';
 
 type LayoutProps = {
   pageTitle?: string;
@@ -13,11 +14,12 @@ function Layout({pageTitle, children}: LayoutProps): JSX.Element {
       <Helmet>
         <title>{pageTitle} &#8211; Фотошоп</title>
       </Helmet>
-      <Header />
+      <MemoHeader />
       {children}
-      <Footer />
+      <MemoFooter />
     </div>
   );
 }
 
-export default Layout;
+const MemoLayout = memo(Layout);
+export default MemoLayout;

@@ -1,5 +1,5 @@
 import { Review } from '../../types/review';
-import RatingStars from '../rating-stars/rating-stars';
+import MemoRatingStars from '../rating-stars/rating-stars';
 
 type ReviewItemProps = {
   reviewItem: Review;
@@ -18,7 +18,7 @@ function ReviewItem({reviewItem}: ReviewItemProps): JSX.Element {
         <time className="review-card__data" dateTime={dateAttr}>{dateReview}</time>
       </div>
       <div className="rate review-card__rate">
-        <RatingStars rating={rating} />
+        <MemoRatingStars rating={rating} />
         <p className="visually-hidden">Оценка: {rating}</p>
       </div>
       <ul className="review-card__list">
