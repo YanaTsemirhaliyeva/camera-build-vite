@@ -1,7 +1,5 @@
 {
-  "routes": [
-    {"src": "/", "dest": "/"},
-    {"src": "/camera/:id", "dest": "/"},
-    {"src": "/basket", "dest": "/"}
+  "rewrites": [
+    {"source": "/(.*)", "destination": "/index.html"}
   ]
 }
