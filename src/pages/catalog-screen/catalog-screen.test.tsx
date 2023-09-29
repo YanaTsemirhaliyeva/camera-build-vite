@@ -2,7 +2,7 @@ import { withHistory, withStore } from '../../utils-for-test/mock-component';
 import { render, screen } from '@testing-library/react';
 import CatalogScreen from './catalog-screen';
 import { makeFakeCameraList, makeFakePromoList } from '../../utils-for-test/mocks';
-import { Status } from '../../const';
+import { ProductInfoURL, Status } from '../../const';
 
 describe('Page: Catalog Screen', () => {
   const mockCameraList = makeFakeCameraList();
@@ -19,6 +19,7 @@ describe('Page: Catalog Screen', () => {
         activePage: 1,
         activeCameraModal: undefined,
         status: Status.Idle,
+        cameraInfo: ProductInfoURL.Description
       },
       PROMO: {
         promo: [...mockPromoList],

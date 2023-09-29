@@ -1,4 +1,4 @@
-import { Status } from '../const';
+import { ProductInfoURL, Status } from '../const';
 import { store } from '../store';
 import { Camera } from './camera';
 import { Promo } from './promo';
@@ -17,6 +17,7 @@ export type CameraData = {
   activePage: number;
   activeCameraModal: Camera | undefined;
   status: Status;
+  cameraInfo: ProductInfoURL;
 };
 
 export type PromoData = {

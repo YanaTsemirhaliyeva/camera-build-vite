@@ -1,7 +1,7 @@
 import { withHistory, withStore } from '../../utils-for-test/mock-component';
 import { render, screen} from '@testing-library/react';
 import Pagination from './pagination';
-import { Status } from '../../const';
+import { ProductInfoURL, Status } from '../../const';
 
 describe('Component: Pagination', () => {
   const initialState = {
@@ -14,6 +14,7 @@ describe('Component: Pagination', () => {
       activePage: 1,
       activeCameraModal: undefined,
       status: Status.Idle,
+      cameraInfo: ProductInfoURL.Description
     }};
 
   it('should render correctly with 20 items', () => {

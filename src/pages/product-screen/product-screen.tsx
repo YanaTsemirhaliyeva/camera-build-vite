@@ -1,12 +1,12 @@
-import { Link, useParams } from 'react-router-dom';
+import { Link, useLocation, useParams, useSearchParams } from 'react-router-dom';
 import Breadcrumbs from '../../components/breadcrumbs/breadcrumbs';
 import Layout from '../../components/layout/layout';
 import ReviewBlock from '../../components/review-block/review-block';
 import SimilarProducts from '../../components/similar-products/similar-products';
-import { AppRoute } from '../../const';
+import { AppRoute, ProductInfoURL } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { getActiveCameraModal, getCameraItem, isCameraItemStatusLoading } from '../../store/cameras/cameras.selectors';
-import { useEffect, useState } from 'react';
+import { getActiveCameraModal, getCameraInfoActive, getCameraItem, isCameraItemStatusLoading } from '../../store/cameras/cameras.selectors';
+import { useEffect, useMemo, useState } from 'react';
 import { fetchCameraItemAction, fetchReviewsAction, fetchSimilarProductsAction } from '../../store/api-actions';
 import Spinner from '../../components/spinner/spinner';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
@@ -16,13 +16,19 @@ import { getSimilarProducts, isSimilarProductsLoading } from '../../store/simila
 import { getReviews } from '../../store/reviews/reviews.selectors';
 import ModalBuyProduct from '../../components/modal-buy-product/modal-buy-product';
 import ModalFormReview from '../../components/modal-form-review/modal-form-review';
-import { dropCameraItem } from '../../store/cameras/cameras.slice';
+import { dropCameraItem, setCameraInfo } from '../../store/cameras/cameras.slice';
 import { dropReviews } from '../../store/reviews/reviews.slice';
 import { dropSimilar } from '../../store/similar/similar.slice';
+import { QueryParams } from '../../types/query-params';
 
 function ProductScreen(): JSX.Element {
   const {cameraId} = useParams();
   const dispatch = useAppDispatch();
+  const location = useLocation();
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const activeInfo = useAppSelector(getCameraInfoActive);
+  const currentInfo = searchParams.get('about');
 
   const currentProduct = useAppSelector(getCameraItem);
   const isDataProductLoading = useAppSelector(isCameraItemStatusLoading);
@@ -37,7 +43,29 @@ function ProductScreen(): JSX.Element {
 
   const [isFormModalActive, setIsFormModalActive] = useState(false);
 
-  const [isActive, setIsActive] = useState<boolean>(true);
+  const currentParams = useMemo(() => {
+    const params: QueryParams = {};
+    if (activeInfo) {
+      params.about = activeInfo;
+    }
+    return params;
+  }, [activeInfo]);
+
+  useEffect(() => {
+    if(currentInfo) {
+      dispatch(setCameraInfo(currentInfo as ProductInfoURL));
+    }
+  }, [currentInfo, dispatch]);
+
+  useEffect(() => {
+    setSearchParams(currentParams);
+  }, [setSearchParams, currentParams]);
+
+  let info = location.search.split('=')[1];
+  if (info === null || info === undefined) {
+    info = ProductInfoURL.Description;
+  }
+
 
   useEffect(() => {
     if (cameraId) {
@@ -97,22 +125,22 @@ function ProductScreen(): JSX.Element {
                   <div className="tabs product__tabs">
                     <div className="tabs__controls product__tabs-controls">
                       <button
-                        className={classNames({'is-active': !isActive}, 'tabs__control')}
+                        className={classNames({'is-active': info === ProductInfoURL.Characteristics}, 'tabs__control')}
                         type="button"
-                        onClick={() => setIsActive(!isActive)}
+                        onClick={() => dispatch(setCameraInfo(ProductInfoURL.Characteristics))}
                       >
                         Характеристики
                       </button>
                       <button
-                        className={classNames({'is-active': isActive}, 'tabs__control')}
+                        className={classNames({'is-active': info === ProductInfoURL.Description}, 'tabs__control')}
                         type="button"
-                        onClick={() => setIsActive(!isActive)}
+                        onClick={() => dispatch(setCameraInfo(ProductInfoURL.Description))}
                       >
                         Описание
                       </button>
                     </div>
                     <div className="tabs__content">
-                      <div className={classNames({'is-active': !isActive}, 'tabs__element')}>
+                      <div className={classNames({'is-active': info === ProductInfoURL.Characteristics}, 'tabs__element')}>
                         <ul className="product__tabs-list">
                           <li className="item-list"><span className="item-list__title">Артикул:</span>
                             <p className="item-list__text">{vendorCode}</p>
@@ -128,7 +156,7 @@ function ProductScreen(): JSX.Element {
                           </li>
                         </ul>
                       </div>
-                      <div className={classNames({'is-active': isActive}, 'tabs__element')}>
+                      <div className={classNames({'is-active': info === ProductInfoURL.Description}, 'tabs__element')}>
                         <div className="product__tabs-text">
                           <p>{description.split('.')[0]}.</p>
                           {description.split('.').length > 1 && <p>{description.split('.').slice(1).join('.')}</p>}
