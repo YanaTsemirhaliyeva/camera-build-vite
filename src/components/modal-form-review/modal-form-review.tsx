@@ -129,8 +129,8 @@ function ModalFormReview({isActive, setIsModalActive}: ModalFormReviewProps): JS
                     required: true,
 
                     minLength: {
-                      value: 10,
-                      message: 'Минимум 10 символов'
+                      value: 2,
+                      message: 'Минимум 2 символа'
                     },
                     maxLength: {
                       value: 160,
