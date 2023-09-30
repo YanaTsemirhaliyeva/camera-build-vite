@@ -27,11 +27,10 @@ describe('Reviews Slice', () => {
     expect(result).toEqual(expectedState);
   });
 
-  it('should set "isReviewsDataLoading" to "true" & status to "loading" with "fetchReviewsAction.pending"', () => {
+  it('should set "isReviewsDataLoading" to "true" with "fetchReviewsAction.pending"', () => {
     const expectedState = {
       ...initialState,
       isReviewsDataLoading: true,
-      status: Status.Loading,
     };
 
     const result = reviews.reducer(undefined, fetchReviewsAction.pending);
@@ -44,7 +43,6 @@ describe('Reviews Slice', () => {
     const expectedState = {
       ...initialState,
       reviews: mockReviews,
-      status: Status.Success,
     };
 
     const result = reviews.reducer(
@@ -58,8 +56,7 @@ describe('Reviews Slice', () => {
 
   it('should set "isReviewsDataLoading" to "false" with "fetchReviewsAction.rejected', () => {
     const expectedState = {
-      ...initialState,
-      status: Status.Error,
+      ...initialState
     };
 
     const result = reviews.reducer(

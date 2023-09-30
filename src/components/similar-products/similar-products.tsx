@@ -3,6 +3,7 @@ import SimilarCard from '../similar-card/similar-card';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import { Navigation } from 'swiper/modules';
+import './similar-products.css';
 
 type SimilarProductsProps = {
   similars: Camera[];
@@ -39,6 +40,7 @@ function SimilarProducts({similars, setIsModalActive}: SimilarProductsProps): JS
             type="button"
             aria-label="Предыдущий слайд"
             style={{pointerEvents: 'auto'}}
+            disabled
           >
             <svg width="7" height="12" aria-hidden="true">
               <use xlinkHref="#icon-arrow"></use>

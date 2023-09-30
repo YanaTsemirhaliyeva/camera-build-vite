@@ -16,21 +16,21 @@ export const reviews = createSlice({
     dropReviews: (state) => {
       state.reviews = [];
     },
+    resetPostStatus: (state) => {
+      state.status = Status.Idle;
+    }
   },
   extraReducers(builder) {
     builder
       .addCase(fetchReviewsAction.pending, (state) => {
         state.isReviewsDataLoading = true;
-        state.status = Status.Loading;
       })
       .addCase(fetchReviewsAction.fulfilled, (state, action) => {
         state.reviews = action.payload;
         state.isReviewsDataLoading = false;
-        state.status = Status.Success;
       })
       .addCase(fetchReviewsAction.rejected, (state) => {
         state.isReviewsDataLoading = false;
-        state.status = Status.Error;
       })
       .addCase(postReviewAction.pending, (state) => {
         state.status = Status.Loading;
@@ -45,4 +45,4 @@ export const reviews = createSlice({
   },
 });
 
-export const { dropReviews } = reviews.actions;
+export const { dropReviews, resetPostStatus } = reviews.actions;

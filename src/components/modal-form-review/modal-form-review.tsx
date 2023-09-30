@@ -1,5 +1,5 @@
-import { ChangeEvent, Fragment, useState } from 'react';
-import { RATING_VALUES, Status, TITLE_RATING_VALUES } from '../../const';
+import { ChangeEvent, useState } from 'react';
+import { Status } from '../../const';
 import LayoutModal from '../layout-modal/layoyt-modal';
 import { ReviewPost } from '../../types/review';
 import { useForm } from 'react-hook-form';
@@ -20,6 +20,7 @@ function ModalFormReview({isActive, setIsModalActive}: ModalFormReviewProps): JS
   const isReviewDataPosting = useAppSelector(getPostReviewStatus) === Status.Loading;
 
   const [reviewText, setReviewText] = useState({review: ''});
+  const [ratingValue, setRatingValue] = useState(0);
 
   const handleReviewChange =
     (evt: ChangeEvent<HTMLTextAreaElement>): void => {
@@ -59,20 +60,19 @@ function ModalFormReview({isActive, setIsModalActive}: ModalFormReviewProps): JS
               </legend>
               <div className="rate__bar">
                 <div className="rate__group">
-                  {RATING_VALUES.reverse().map((item) => (
-                    <Fragment key={item}>
-                      <input className="visually-hidden"
-                        id={`star-${item}`} type="radio"
-                        value={item}
-                        {...register('rating', {required: true})}
-                        data-testid='star-rating'
-                      />
-                      <label className="rate__label" htmlFor={`star-${item}`} title={TITLE_RATING_VALUES[item]}></label>
-                    </Fragment>
-                  ))}
+                  <input data-testid='star-rating' onClick={() => setRatingValue(5)} className="visually-hidden" id="star-5" type="radio" value="5" {...register('rating', {required: true})}/>
+                  <label className="rate__label" htmlFor="star-5" title="Отлично"></label>
+                  <input data-testid='star-rating' onClick={() => setRatingValue(4)} className="visually-hidden" id="star-4" type="radio" value="4"{...register('rating', {required: true})}/>
+                  <label className="rate__label" htmlFor="star-4" title="Хорошо"></label>
+                  <input data-testid='star-rating' onClick={() => setRatingValue(3)} className="visually-hidden" id="star-3" type="radio" value="3"{...register('rating', {required: true})}/>
+                  <label className="rate__label" htmlFor="star-3" title="Нормально"></label>
+                  <input data-testid='star-rating' onClick={() => setRatingValue(2)} className="visually-hidden" id="star-2" type="radio" value="2"{...register('rating', {required: true})}/>
+                  <label className="rate__label" htmlFor="star-2" title="Плохо"></label>
+                  <input data-testid='star-rating' onClick={() => setRatingValue(1)} className="visually-hidden" id="star-1" type="radio" value="1"{...register('rating', {required: true})}/>
+                  <label className="rate__label" htmlFor="star-1" title="Ужасно"></label>
                 </div>
                 <div className="rate__progress">
-                  <span className="rate__stars">0</span> <span>/</span> <span className="rate__all-stars">5</span>
+                  <span className="rate__stars">{ratingValue}</span> <span>/</span> <span className="rate__all-stars">5</span>
                 </div>
               </div>
               {errors.rating && <p className="rate__message">Нужно оценить товар</p>}

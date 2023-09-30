@@ -40,63 +40,42 @@ function Pagination({totalCountCameras}: PaginationProps): JSX.Element {
   let page = Number(location.search.split('=')[1]);
 
   if (isNaN(page)) {
-    page = currentPage;
+    page = activePage;
   }
   if (page > pageCount) {
     page = 1;
   }
 
-  const modulo = page % MAX_PAGES_COUNT_PER_PAGE;
-  const activePageForward = () => {
-    if (modulo === 1) {
-      return page + 3;
-    }
-    if (modulo === 2) {
-      return page + 2;
-    }
-    return page + 1;
-  };
+  const activePageForward = () => page + 1;
 
-  const activePageBack = () => {
-    if (modulo === 1) {
-      return page - 1;
-    }
-    if (modulo === 2) {
-      return page - 2;
-    }
-    return page - 3;
-  };
+  const activePageBack = () => page - 1;
 
-  const activeFirstSlice = useMemo(() => {
-    if (page === 0) {
+  const activeFirstSlice = (pageNumber: number) => {
+    const modulo = pageNumber % MAX_PAGES_COUNT_PER_PAGE;
+    if (pageNumber <= 3) {
       return 0;
     }
-    if (page === 1) {
-      return page - 1;
-    }
     if (modulo === 1) {
-      return page - 1;
+      return pageNumber - 1;
     }
     if (modulo === 2) {
-      return page - 2;
+      return pageNumber - 2;
     }
-    return page - 3;
-  }, [modulo, page]);
+    return pageNumber - 3;
+  };
 
-  const [firstSlice, setFirstSlice] = useState<number>(activeFirstSlice);
-  const [secondSlice, setSecondSlice] = useState<number>(firstSlice + MAX_PAGES_COUNT_PER_PAGE);
-  const pagination = [...Array(pageCount).keys()].slice(firstSlice, secondSlice);
+  const [firstSlice, setFirstSlice] = useState<number>(0);
+  const pagination = [...Array(pageCount).keys()].slice(firstSlice, firstSlice + MAX_PAGES_COUNT_PER_PAGE);
 
   return (
     <div className="pagination" data-testid='pagination'>
       <ul className="pagination__list">
-        {page > MAX_PAGES_COUNT_PER_PAGE &&
+        {page > 1 &&
         <li className="pagination__item">
           <Link className="pagination__link pagination__link--text"
             to='#'
             onClick={() => {
-              setFirstSlice(firstSlice - MAX_PAGES_COUNT_PER_PAGE);
-              setSecondSlice(secondSlice - MAX_PAGES_COUNT_PER_PAGE);
+              setFirstSlice(activeFirstSlice(page - 1));
               dispatch(setActivePage(activePageBack()));
             }}
           >
@@ -119,12 +98,11 @@ function Pagination({totalCountCameras}: PaginationProps): JSX.Element {
             </Link>
           </li>
         ))}
-        {pageCount > 3 && pageCount > secondSlice &&
+        {pageCount > 3 && page < pageCount &&
          <li className="pagination__item">
            <Link className="pagination__link pagination__link--text"
              onClick={() => {
-               setSecondSlice(secondSlice + MAX_PAGES_COUNT_PER_PAGE);
-               setFirstSlice(firstSlice + MAX_PAGES_COUNT_PER_PAGE);
+               setFirstSlice(activeFirstSlice(page + 1));
                dispatch(setActivePage(activePageForward()));
              }}
              to='#'

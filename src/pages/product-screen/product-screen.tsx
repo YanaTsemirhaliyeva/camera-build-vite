@@ -19,6 +19,7 @@ import { dropCameraItem } from '../../store/cameras/cameras.slice';
 import { dropReviews } from '../../store/reviews/reviews.slice';
 import { dropSimilar } from '../../store/similar/similar.slice';
 import ProductTabs from '../../components/product-tabs/product-tabs';
+import ModalSuccessfulFeedback from '../../components/modal-successful-feedback/modal-successful-feedback';
 
 function ProductScreen(): JSX.Element {
   const {cameraId} = useParams();
@@ -108,6 +109,7 @@ function ProductScreen(): JSX.Element {
         {activeCameraModal &&
           <ModalBuyProduct isActive={isModalActive} setIsModalActive={setIsModalACtive} camera={activeCameraModal} />}
         <ModalFormReview isActive={isFormModalActive} setIsModalActive={setIsFormModalActive} />
+        <ModalSuccessfulFeedback />
       </main>
       <Link className="up-btn" to="#header" data-testid='scroll'
         onClick={() => {

@@ -7,3 +7,4 @@ export const getReviews = (state: State): Review[] => state[NameSpace.Reviews].r
 export const isReviewsDataLoading = (state: State): boolean => state[NameSpace.Reviews].isReviewsDataLoading;
 
 export const getPostReviewStatus = (state: State): Status => state[NameSpace.Reviews].status;
+export const isPostReviewStatusSuccess = (state: State): boolean => state[NameSpace.Reviews].status === Status.Success;

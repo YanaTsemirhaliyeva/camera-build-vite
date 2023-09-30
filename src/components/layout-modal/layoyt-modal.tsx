@@ -1,21 +1,28 @@
 import classNames from 'classnames';
 import { useCallback, useEffect, useRef } from 'react';
 import FocusLock from 'react-focus-lock';
+import { useAppDispatch } from '../../hooks';
+import { resetPostStatus } from '../../store/reviews/reviews.slice';
 
 type LayoutModalProps = {
   children: React.ReactNode;
   isActive: boolean;
   setIsModalActive: (arg: boolean) => void;
+  modalFeedback?: boolean;
 }
 
-function LayoutModal({children, isActive, setIsModalActive}: LayoutModalProps): JSX.Element {
+function LayoutModal({children, isActive, setIsModalActive, modalFeedback}: LayoutModalProps): JSX.Element {
   const modalRef = useRef(null);
+  const dispatch = useAppDispatch();
 
   const handleEscapeKeydown = useCallback((evt: KeyboardEvent) => {
     if (evt.key === 'Escape') {
       setIsModalActive(false);
     }
-  }, [setIsModalActive]);
+    if (modalFeedback) {
+      dispatch(resetPostStatus);
+    }
+  }, [dispatch, modalFeedback, setIsModalActive]);
 
   useEffect(() => {
     if (isActive && modalRef.current) {

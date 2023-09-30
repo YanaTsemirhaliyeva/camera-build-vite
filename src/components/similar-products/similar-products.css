@@ -1,0 +1,11 @@
+.slider-controls.slider-controls--next.swiper-button-disabled:hover,
+.slider-controls.slider-controls--next.swiper-button-disabled:active,
+.slider-controls.slider-controls--next.swiper-button-disabled:focus,
+.slider-controls.slider-controls--prev.swiper-button-disabled:hover,
+.slider-controls.slider-controls--prev.swiper-button-disabled:active,
+.slider-controls.slider-controls--prev.swiper-button-disabled:focus  {
+  color: #ddd;
+  background-color: #f8f8f8;
+  pointer-events: none;
+  cursor: default;
+}
