@@ -15,6 +15,13 @@ function LayoutModal({children, isActive, setIsModalActive, modalFeedback}: Layo
   const modalRef = useRef(null);
   const dispatch = useAppDispatch();
 
+  const handleButtonClose = () => {
+    setIsModalActive(false);
+    if (modalFeedback) {
+      dispatch(resetPostStatus());
+    }
+  };
+
   const handleEscapeKeydown = useCallback((evt: KeyboardEvent) => {
     if (evt.key === 'Escape') {
       setIsModalActive(false);
@@ -47,7 +54,7 @@ function LayoutModal({children, isActive, setIsModalActive, modalFeedback}: Layo
           <div className="modal__content">
             {children}
             <button className="cross-btn" type="button" aria-label="Закрыть попап"
-              onClick={() => setIsModalActive(false)}
+              onClick={handleButtonClose}
             >
               <svg width="10" height="10" aria-hidden="true">
                 <use xlinkHref="#icon-close"></use>
