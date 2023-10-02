@@ -20,7 +20,7 @@ function LayoutModal({children, isActive, setIsModalActive, modalFeedback}: Layo
       setIsModalActive(false);
     }
     if (modalFeedback) {
-      dispatch(resetPostStatus);
+      dispatch(resetPostStatus());
     }
   }, [dispatch, modalFeedback, setIsModalActive]);
 
