@@ -24,7 +24,11 @@ function ReviewBlock({reviews, setIsModalActive}: ReviewsBlockProps): JSX.Elemen
           </button>
         </div>
         <ul className="review-block__list">
-          {reviews.length > 0 && reviewsSortedByTime.slice(0, activeSlice).map((review) => <ReviewItem key={review.id} reviewItem={review} />)}
+          {reviews.length > 0 ?
+            reviewsSortedByTime.slice(0, activeSlice).map((review) =>
+              <ReviewItem key={review.id} reviewItem={review} />
+            )
+            : <li className="review-card">Ваш отзыв будет первым</li>}
         </ul>
         {reviewsSortedByTime.length > activeSlice &&
         <div className="review-block__buttons">

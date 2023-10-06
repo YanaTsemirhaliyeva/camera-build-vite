@@ -103,7 +103,7 @@ function ProductScreen(): JSX.Element {
             {similarProducts.length > 0 && <SimilarProducts similars={similarProducts} setIsModalActive={setIsModalACtive} />}
           </div>
           <div className="page-content__section" data-testid='reviews'>
-            {reviews.length > 0 && <ReviewBlock reviews={reviews} setIsModalActive={setIsFormModalActive} /> }
+            <ReviewBlock reviews={reviews} setIsModalActive={setIsFormModalActive} />
           </div>
         </div>
         {activeCameraModal &&

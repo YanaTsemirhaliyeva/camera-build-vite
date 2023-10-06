@@ -73,3 +73,13 @@ export enum ProductInfoURL {
   Description = 'description',
   Characteristics = 'characteristics',
 }
+
+export enum KeyCode {
+  Enter = 'Enter',
+  ArrowUp = 'ArrowUp',
+  ArrowDown = 'ArrowDown',
+  Esc = 'Escape'
+}
+
+export const DEFAULT_DROPDOWNS_COUNT = 4;
+export const DEFAULT_DROPDOWNS_INPUT_LENGTH = 3;
