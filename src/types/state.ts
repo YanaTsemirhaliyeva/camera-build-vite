@@ -1,4 +1,4 @@
-import { Status } from '../const';
+import { SortOrder, SortType, Status } from '../const';
 import { store } from '../store';
 import { Camera } from './camera';
 import { Promo } from './promo';
@@ -17,6 +17,8 @@ export type CameraData = {
   activePage: number;
   activeCameraModal: Camera | undefined;
   status: Status;
+  sortType: SortType | null;
+  sortOrder: SortOrder | null;
 };
 
 export type PromoData = {
@@ -34,4 +36,9 @@ export type ReviewsData = {
   reviews: Review[];
   isReviewsDataLoading: boolean;
   status: Status;
+};
+
+export type SortCameras = {
+  sortType: SortType;
+  sortPrice: SortOrder;
 };

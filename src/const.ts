@@ -22,6 +22,7 @@ export enum NameSpace {
   Promo = 'PROMO',
   Coupon = 'COUPON',
   Similar = 'SIMILAR',
+  Sort = 'SORT',
 }
 
 export const ITEMS_PER_PAGE = 9;
@@ -83,3 +84,18 @@ export enum KeyCode {
 
 export const DEFAULT_DROPDOWNS_COUNT = 4;
 export const DEFAULT_DROPDOWNS_INPUT_LENGTH = 3;
+
+export enum SortType {
+  Price = 'по цене',
+  Popular = 'по популярности'
+}
+
+export enum SortOrder {
+  Up = 'по возрастанию',
+  Down = 'по убыванию'
+}
+
+export const sortOrderQueryValue = {
+  [SortOrder.Up]: 'up',
+  [SortOrder.Down]: 'down'
+};

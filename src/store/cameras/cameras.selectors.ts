@@ -1,4 +1,4 @@
-import { NameSpace, Status } from '../../const';
+import { NameSpace, SortOrder, SortType, Status } from '../../const';
 import { Camera } from '../../types/camera';
 import { State } from '../../types/state';
 
@@ -12,3 +12,6 @@ export const getActivePageNumber = (state: State): number => state[NameSpace.Cam
 export const getActiveCameraModal = (state: State): Camera | undefined => state[NameSpace.Cameras].activeCameraModal;
 
 export const getCamerasDataStatus = (state: State): Status => state[NameSpace.Cameras].status;
+
+export const getCurrentSortType = (state: State): SortType | null => state[NameSpace.Cameras].sortType;
+export const getCurrentSortOrder = (state: State): SortOrder | null => state[NameSpace.Cameras].sortOrder;

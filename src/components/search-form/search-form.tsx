@@ -67,7 +67,8 @@ function SearchForm(): JSX.Element {
   }, [navigate]);
 
   return (
-    <div className={classNames({'list-opened': textValue.length >= DEFAULT_DROPDOWNS_INPUT_LENGTH && searchedCameras.length}, 'form-search')}
+    <div
+      className={classNames({'list-opened': textValue.length >= DEFAULT_DROPDOWNS_INPUT_LENGTH && searchedCameras.length}, 'form-search')}
       ref={formRef}
       tabIndex={-1}
     >
