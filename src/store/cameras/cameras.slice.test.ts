@@ -13,6 +13,8 @@ describe('Cameras Slice', () => {
     activePage: 1,
     activeCameraModal: undefined,
     status: Status.Idle,
+    sortType: null,
+    sortOrder: null,
   };
   const emptyAction = {type: ''};
 

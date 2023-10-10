@@ -3,14 +3,12 @@ import { SortOrder, SortType } from '../../const';
 import { getCurrentSortOrder, getCurrentSortType } from '../../store/cameras/cameras.selectors';
 import { changeSortOrder, changeSortType } from '../../store/cameras/cameras.slice';
 import { useMemo } from 'react';
-// import { useLocation } from 'react-router-dom';
 
 function CatalogSort(): JSX.Element {
   const dispatch = useAppDispatch();
-  // const location = useLocation();
+
   const currentSortType = useAppSelector(getCurrentSortType);
   const currentSortOrder = useAppSelector(getCurrentSortOrder);
-  // const currentType = location.search
 
   const handleTypeClick = useMemo(() => (value: SortType) => {
     dispatch(changeSortType(value));

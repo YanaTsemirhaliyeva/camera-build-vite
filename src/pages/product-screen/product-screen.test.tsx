@@ -22,6 +22,8 @@ describe('Component: Page Product Screen', () => {
         activePage: 1,
         activeCameraModal: undefined,
         status: Status.Idle,
+        sortType: null,
+        sortOrder: null,
       },
       PROMO: {
         promo: [],

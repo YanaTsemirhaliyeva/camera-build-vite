@@ -25,6 +25,8 @@ describe('Component: Rating Stars', () => {
           activePage: 1,
           activeCameraModal: undefined,
           status: Status.Idle,
+          sortType: null,
+          sortOrder: null,
         },
       });
 

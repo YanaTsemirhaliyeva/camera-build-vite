@@ -1,6 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import MemoLayout from './layout';
-import { withHistory } from '../../utils-for-test/mock-component';
+import { withHistory, withStore } from '../../utils-for-test/mock-component';
+import { makeFakeStore } from '../../utils-for-test/mocks';
 
 describe('Component: Layout', () => {
   const children: JSX.Element = (
@@ -9,9 +10,11 @@ describe('Component: Layout', () => {
       <p>Learning to test with Vitest</p>
     </>
   );
+  const fakeStore = makeFakeStore();
 
   it('should render correctly', () => {
-    const preparedComponent = withHistory(<MemoLayout pageTitle=''>{children}</MemoLayout>);
+    const {withStoreComponent} = withStore(<MemoLayout pageTitle=''>{children}</MemoLayout>, fakeStore);
+    const preparedComponent = withHistory(withStoreComponent);
 
     render(preparedComponent);
 

@@ -38,7 +38,3 @@ export type ReviewsData = {
   status: Status;
 };
 
-export type SortCameras = {
-  sortType: SortType;
-  sortPrice: SortOrder;
-};

@@ -18,7 +18,9 @@ describe('Page: Not Found Screen', () => {
         hasError: false,
         activePage: 1,
         activeCameraModal: undefined,
-        status: Status.Idle
+        status: Status.Idle,
+        sortType: null,
+        sortOrder: null,
       },
       PROMO: {
         promo: [...mockPromoList],
