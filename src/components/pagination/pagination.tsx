@@ -42,7 +42,7 @@ function Pagination({totalCountCameras}: PaginationProps): JSX.Element {
     return pageNumber - 3;
   };
 
-  const [firstSlice, setFirstSlice] = useState<number>(0);
+  const [firstSlice, setFirstSlice] = useState<number>((activeFirstSlice(page)));
   const pagination = [...Array(pageCount).keys()].slice(firstSlice, firstSlice + MAX_PAGES_COUNT_PER_PAGE);
 
   return (
