@@ -1,13 +1,9 @@
 import styles from './error-screen.module.css';
 import { useAppDispatch } from '../../hooks';
 import { fetchCamerasAction } from '../../store/api-actions';
-import { useNavigate } from 'react-router-dom';
-import { AppRoute } from '../../const';
-
 
 function ErrorScreen(): JSX.Element {
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
 
   return (
     <div className={styles.container}>
@@ -18,7 +14,6 @@ function ErrorScreen(): JSX.Element {
         <button
           onClick={() => {
             dispatch(fetchCamerasAction());
-            navigate(AppRoute.Index);
           }}
           className={styles['error__button']}
         >Вперёд

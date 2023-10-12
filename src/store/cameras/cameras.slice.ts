@@ -118,16 +118,13 @@ export const cameras = createSlice({
       })
       .addCase(fetchCameraItemAction.pending, (state) => {
         state.isCameraItemDataLoading = true;
-        state.hasError = false;
       })
       .addCase(fetchCameraItemAction.fulfilled, (state, action) => {
         state.cameraItem = action.payload;
-        state.hasError = false;
         state.isCameraItemDataLoading = false;
       })
       .addCase(fetchCameraItemAction.rejected, (state) => {
         state.isCameraItemDataLoading = false;
-        state.hasError = true;
       });
   },
 });

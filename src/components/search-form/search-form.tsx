@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { AppRoute, DEFAULT_DROPDOWNS_COUNT, DEFAULT_DROPDOWNS_INPUT_LENGTH, KeyCode } from '../../const';
 import useKeyPress from '../../hooks/useKeyPress/useKeyPress';
 import ReactFocusLock from 'react-focus-lock';
-import MemoSearchCameraItem from '../search-camera-item/search-camera-item';
+import MemoSearchListItem from '../search-list-item/search-list-item';
 
 function SearchForm(): JSX.Element {
 
@@ -89,7 +89,7 @@ function SearchForm(): JSX.Element {
             {searchedCameras.map((camera, i) => {
               const isCurrent = i === currentCameraIndex;
               return (
-                <MemoSearchCameraItem
+                <MemoSearchListItem
                   camera={camera}
                   isCurrent={isCurrent}
                   key={camera.id}

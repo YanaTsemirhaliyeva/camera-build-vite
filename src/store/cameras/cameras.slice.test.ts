@@ -73,7 +73,8 @@ describe('Cameras Slice', () => {
     it('should set "isCamerasDataLoading" to "false" with "fetchCamerasAction.rejected', () => {
       const expectedState = {
         ...initialState,
-        status: Status.Error
+        status: Status.Error,
+        hasError: true
       };
 
       const result = cameras.reducer(

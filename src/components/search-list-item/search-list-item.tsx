@@ -2,13 +2,13 @@ import { memo, useEffect, useRef } from 'react';
 import { Camera } from '../../types/camera';
 import { KeyCode } from '../../const';
 
-type SearchCameraItemProps = {
+type SearchListItemProps = {
   camera: Camera;
   isCurrent: boolean;
   onClick: (cameraId: number) => void;
 };
 
-function SearchCameraItem({camera, isCurrent, onClick}: SearchCameraItemProps): JSX.Element {
+function SearchListItem({camera, isCurrent, onClick}: SearchListItemProps): JSX.Element {
   const cameraItemRef = useRef<HTMLLIElement>(null);
 
   useEffect(() => {
@@ -39,5 +39,5 @@ function SearchCameraItem({camera, isCurrent, onClick}: SearchCameraItemProps): 
   );
 }
 
-const MemoSearchCameraItem = memo(SearchCameraItem);
-export default MemoSearchCameraItem;
+const MemoSearchListItem = memo(SearchListItem);
+export default MemoSearchListItem;
