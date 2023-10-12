@@ -9,6 +9,7 @@ export const isCamerasDataStatusLoading = (state: State): boolean => state[NameS
 
 export const getCameraItem = (state: State): Camera | null => state[NameSpace.Cameras].cameraItem;
 export const isCameraItemStatusLoading = (state: State): boolean => state[NameSpace.Cameras].isCameraItemDataLoading;
+export const isErrorStatus = (state: State): boolean => state[NameSpace.Cameras].hasError;
 
 export const getActivePageNumber = (state: State): number => state[NameSpace.Cameras].activePage;
 export const getActiveCameraModal = (state: State): Camera | undefined => state[NameSpace.Cameras].activeCameraModal;

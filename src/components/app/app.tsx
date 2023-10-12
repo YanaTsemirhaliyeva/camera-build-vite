@@ -6,17 +6,25 @@ import BasketScreen from '../../pages/basket-screen/basket-screen';
 import { HelmetProvider } from 'react-helmet-async';
 import NotFoundScreen from '../../pages/not-found-screen/not-found-screen';
 import { useAppSelector } from '../../hooks';
-import { isCamerasDataStatusLoading } from '../../store/cameras/cameras.selectors';
+import { isCamerasDataStatusLoading, isErrorStatus } from '../../store/cameras/cameras.selectors';
 import Spinner from '../spinner/spinner';
 import { isPromoDataLoading } from '../../store/promo/promo.selectors';
+import ErrorScreen from '../../pages/error-screen/error-screen';
 
 function App(): JSX.Element {
 
   const isCamerasDataLoading = useAppSelector(isCamerasDataStatusLoading);
   const isPromoStatusDataLoading = useAppSelector(isPromoDataLoading);
+  const hasError = useAppSelector(isErrorStatus);
 
   if (isCamerasDataLoading || isPromoStatusDataLoading) {
     return <Spinner/>;
+  }
+
+  if (hasError) {
+    return (
+      <ErrorScreen />
+    );
   }
 
   return (

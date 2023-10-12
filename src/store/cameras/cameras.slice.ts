@@ -102,26 +102,32 @@ export const cameras = createSlice({
     builder
       .addCase(fetchCamerasAction.pending, (state) => {
         state.isCamerasDataLoading = true;
+        state.hasError = false;
         state.status = Status.Loading;
       })
       .addCase(fetchCamerasAction.fulfilled, (state, action) => {
         state.cameras = action.payload;
+        state.hasError = false;
         state.isCamerasDataLoading = false;
         state.status = Status.Success;
       })
       .addCase(fetchCamerasAction.rejected, (state) => {
         state.isCamerasDataLoading = false;
         state.status = Status.Error;
+        state.hasError = true;
       })
       .addCase(fetchCameraItemAction.pending, (state) => {
         state.isCameraItemDataLoading = true;
+        state.hasError = false;
       })
       .addCase(fetchCameraItemAction.fulfilled, (state, action) => {
         state.cameraItem = action.payload;
+        state.hasError = false;
         state.isCameraItemDataLoading = false;
       })
       .addCase(fetchCameraItemAction.rejected, (state) => {
         state.isCameraItemDataLoading = false;
+        state.hasError = true;
       });
   },
 });

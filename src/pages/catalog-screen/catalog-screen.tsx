@@ -14,6 +14,7 @@ import { fetchCamerasAction, fetchPromoAction } from '../../store/api-actions';
 import { useSearchParams } from 'react-router-dom';
 import { QueryParams } from '../../types/query-params';
 import { changeResetStatus, changeSortOrder, changeSortType, setActiveCategory, setActiveLevel, setActivePage, setActiveType, setMaxPrice, setMinPrice } from '../../store/cameras/cameras.slice';
+import { getPromo } from '../../store/promo/promo.selectors';
 
 
 function CatalogScreen(): JSX.Element {
@@ -51,6 +52,7 @@ function CatalogScreen(): JSX.Element {
   const currentMaxPrice = searchParams.get('price_lt');
 
   const cameraList = useAppSelector(getFilteredCameraList);
+  const promoList = useAppSelector(getPromo);
 
   const pageCount = Math.ceil(cameraList.length / ITEMS_PER_PAGE);
   if (pageCount && pageCount < currentPage || isReset) {
@@ -156,7 +158,7 @@ function CatalogScreen(): JSX.Element {
   return (
     <MemoLayout pageTitle="Каталог">
       <main>
-        <SwiperPromo />
+        {promoList.length > 0 && <SwiperPromo />}
         <div className="page-content">
           <MemoBreadcrumbs page={AppRoute.Index} />
           <section className="catalog">
