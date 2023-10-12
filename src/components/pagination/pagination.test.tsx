@@ -15,7 +15,13 @@ describe('Component: Pagination', () => {
       activeCameraModal: undefined,
       status: Status.Idle,
       sortType: null,
-      sortOrder: null
+      sortOrder: null,
+      isReset: false,
+      minPrice: 0,
+      maxPrice: 0,
+      type: [],
+      category: null,
+      level: [],
     }};
 
   it('should render correctly with 20 items', () => {

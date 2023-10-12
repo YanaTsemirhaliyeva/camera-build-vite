@@ -1,4 +1,4 @@
-import { SortOrder, SortType, Status } from '../const';
+import { CameraCategory, CameraLevel, CameraTypes, SortOrder, SortType, Status } from '../const';
 import { store } from '../store';
 import { Camera } from './camera';
 import { Promo } from './promo';
@@ -19,7 +19,7 @@ export type CameraData = {
   status: Status;
   sortType: SortType | null;
   sortOrder: SortOrder | null;
-};
+} & FiltersData;
 
 export type PromoData = {
   promo: Promo[];
@@ -38,3 +38,11 @@ export type ReviewsData = {
   status: Status;
 };
 
+export type FiltersData = {
+  isReset: boolean;
+  minPrice: number;
+  maxPrice: number;
+  type: CameraTypes[];
+  category: CameraCategory | null;
+  level: CameraLevel[];
+};

@@ -15,6 +15,12 @@ describe('Cameras Slice', () => {
     status: Status.Idle,
     sortType: null,
     sortOrder: null,
+    isReset: false,
+    minPrice: 0,
+    maxPrice: 0,
+    type: [],
+    category: null,
+    level: [],
   };
   const emptyAction = {type: ''};
 

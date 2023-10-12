@@ -1,6 +1,6 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { CameraData } from '../../types/state';
-import { NameSpace, SortOrder, SortType, Status } from '../../const';
+import { CameraCategory, CameraLevel, CameraTypes, NameSpace, SortOrder, SortType, Status } from '../../const';
 import { fetchCameraItemAction, fetchCamerasAction } from '../api-actions';
 
 const initialState: CameraData = {
@@ -14,6 +14,12 @@ const initialState: CameraData = {
   status: Status.Idle,
   sortType: null,
   sortOrder: null,
+  category: null,
+  type: [],
+  level: [],
+  isReset: false,
+  minPrice: 0,
+  maxPrice: 0
 };
 
 export const cameras = createSlice({
@@ -34,53 +40,62 @@ export const cameras = createSlice({
     },
     changeSortType: (state, action: {payload: SortType}) => {
       state.sortType = action.payload;
-
       if (!state.sortOrder) {
         state.sortOrder = SortOrder.Up;
-      }
-      switch (state.sortType) {
-        case SortType.Price:
-          if (state.sortOrder === SortOrder.Up) {
-            state.cameras.sort((a, b) => a.price - b.price);
-          }
-          if (state.sortOrder === SortOrder.Down) {
-            state.cameras.sort((a, b) => b.price - a.price);
-          }
-          break;
-        case SortType.Popular:
-          if (state.sortOrder === SortOrder.Up) {
-            state.cameras.sort((a, b) => a.rating - b.rating);
-          }
-          if (state.sortOrder === SortOrder.Down) {
-            state.cameras.sort((a, b) => b.rating - a.rating);
-          }
-          break;
       }
     },
     changeSortOrder: (state, action: {payload: SortOrder}) => {
       state.sortOrder = action.payload;
-
       if (!state.sortType) {
         state.sortType = SortType.Price;
       }
-      switch (state.sortOrder) {
-        case SortOrder.Down:
-          if (state.sortType === SortType.Price) {
-            state.cameras.sort((a, b) => b.price - a.price);
-          }
-          if (state.sortType === SortType.Popular) {
-            state.cameras.sort((a, b) => b.rating - a.rating);
-          }
-          break;
-        case SortOrder.Up:
-          if (state.sortType === SortType.Price) {
-            state.cameras.sort((a, b) => a.price - b.price);
-          }
-          if (state.sortType === SortType.Popular) {
-            state.cameras.sort((a, b) => a.rating - b.rating);
-          }
-          break;
+    },
+    setActiveType: (state, action: PayloadAction<CameraTypes>) => {
+      if (!state.type.includes(action.payload)) {
+        state.type.push(action.payload);
       }
+    },
+    setActiveCategory: (state, action: PayloadAction<CameraCategory>) => {
+      state.category = action.payload;
+    },
+    setActiveLevel: (state, action: PayloadAction<CameraLevel>) => {
+      if (!state.level.includes(action.payload)) {
+        state.level.push(action.payload);
+      }
+    },
+    changeFilterType: (state, action: PayloadAction<CameraTypes>) => {
+      if (state.type.includes(action.payload)) {
+        state.type = state.type.filter((type) => type !== action.payload);
+        return;
+      }
+      state.type.push(action.payload);
+    },
+    changeFilterLevel: (state, action: PayloadAction<CameraLevel>) => {
+      if (state.level.includes(action.payload)) {
+        state.level = state.level.filter((level) => level !== action.payload);
+        return;
+      }
+      state.level.push(action.payload);
+    },
+    setMinPrice: (state, action: {payload: number}) => {
+      state.minPrice = action.payload;
+    },
+    setMaxPrice: (state, action: {payload: number}) => {
+      state.maxPrice = action.payload;
+    },
+    resetFilters: (state) => {
+      state.activePage = 1;
+      state.sortType = null;
+      state.sortOrder = null;
+      state.category = null;
+      state.type = [];
+      state.level = [];
+      state.minPrice = 0;
+      state.maxPrice = 0;
+      state.isReset = true;
+    },
+    changeResetStatus: (state) => {
+      state.isReset = false;
     }
   },
   extraReducers(builder) {
@@ -111,4 +126,20 @@ export const cameras = createSlice({
   },
 });
 
-export const { setActivePage, setActiveCameraModal, dropCameraItem, setCatalogStatus, changeSortType, changeSortOrder } = cameras.actions;
+export const {
+  setActivePage,
+  setActiveCameraModal,
+  dropCameraItem,
+  setCatalogStatus,
+  changeSortType,
+  changeSortOrder,
+  setActiveType,
+  setActiveCategory,
+  setActiveLevel,
+  changeFilterLevel,
+  changeFilterType,
+  resetFilters,
+  changeResetStatus,
+  setMinPrice,
+  setMaxPrice,
+} = cameras.actions;

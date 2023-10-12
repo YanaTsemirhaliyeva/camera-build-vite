@@ -72,7 +72,13 @@ export const makeFakeStore = (initialState?: Partial<State>): State => ({
     activeCameraModal: undefined,
     status: Status.Idle,
     sortType: null,
-    sortOrder: null
+    sortOrder: null,
+    isReset: false,
+    minPrice: 0,
+    maxPrice: 0,
+    type: [],
+    category: null,
+    level: [],
   },
   PROMO: {
     promo: [],

@@ -22,7 +22,6 @@ export enum NameSpace {
   Promo = 'PROMO',
   Coupon = 'COUPON',
   Similar = 'SIMILAR',
-  Sort = 'SORT',
 }
 
 export const ITEMS_PER_PAGE = 9;
@@ -35,6 +34,13 @@ export enum CameraTypes {
   Плёночная = 'Плёночная',
 }
 
+export const CameraTypesEng = {
+  [CameraTypes.Коллекционная]: 'collection',
+  [CameraTypes.Моментальная]: 'snapshot',
+  [CameraTypes.Плёночная]: 'film',
+  [CameraTypes.Цифровая]: 'digital',
+} as const;
+
 export enum CameraCategory {
   Видеокамера = 'Видеокамера',
   Фотоаппарат = 'Фотоаппарат'
@@ -45,6 +51,12 @@ export enum CameraLevel {
   Любительский = 'Любительский',
   Профессиональный = 'Профессиональный',
 }
+
+export const CameraLevelEng = {
+  [CameraLevel.Нулевой]: 'zero',
+  [CameraLevel.Любительский]: 'non-professional',
+  [CameraLevel.Профессиональный]: 'professional'
+} as const;
 
 export enum CouponType {
   'camera-333' = 'camera-333',

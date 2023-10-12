@@ -1,5 +1,5 @@
 import { Link, useSearchParams } from 'react-router-dom';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { setActivePage } from '../../store/cameras/cameras.slice';
 import { ITEMS_PER_PAGE, MAX_PAGES_COUNT_PER_PAGE } from '../../const';
@@ -43,12 +43,12 @@ function Pagination({totalCountCameras}: PaginationProps): JSX.Element {
   };
 
   const [firstSlice, setFirstSlice] = useState<number>((activeFirstSlice(page)));
-  const pagination = [...Array(pageCount).keys()].slice(firstSlice, firstSlice + MAX_PAGES_COUNT_PER_PAGE);
+  const pagination = useMemo(() => [...Array(pageCount).keys()].slice(firstSlice, firstSlice + MAX_PAGES_COUNT_PER_PAGE), [firstSlice, pageCount]);
 
   return (
     <div className="pagination" data-testid='pagination'>
       <ul className="pagination__list">
-        {page > 1 &&
+        {page > 1 && pageCount > MAX_PAGES_COUNT_PER_PAGE &&
         <li className="pagination__item">
           <Link className="pagination__link pagination__link--text"
             to='#'
