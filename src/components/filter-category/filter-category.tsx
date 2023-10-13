@@ -17,8 +17,8 @@ function FilterCategory(): JSX.Element {
       <div className="custom-checkbox catalog-filter__item">
         <label>
           <input type="checkbox" name="photocamera"
-            checked={activeCategory === CameraCategory.Фотоаппарат}
-            onChange={() => handleCategoryInputClick(CameraCategory.Фотоаппарат)}
+            checked={activeCategory === CameraCategory.Photocamera}
+            onChange={() => handleCategoryInputClick(CameraCategory.Photocamera)}
           />
           <span className="custom-checkbox__icon"></span>
           <span className="custom-checkbox__label">Фотокамера</span>
@@ -27,8 +27,8 @@ function FilterCategory(): JSX.Element {
       <div className="custom-checkbox catalog-filter__item">
         <label>
           <input type="checkbox" name="videocamera"
-            checked={activeCategory === CameraCategory.Видеокамера}
-            onChange={() => handleCategoryInputClick(CameraCategory.Видеокамера)}
+            checked={activeCategory === CameraCategory.Videocamera}
+            onChange={() => handleCategoryInputClick(CameraCategory.Videocamera)}
           />
           <span className="custom-checkbox__icon"></span>
           <span className="custom-checkbox__label">Видеокамера</span>

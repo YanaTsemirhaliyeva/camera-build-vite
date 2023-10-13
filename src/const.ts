@@ -28,34 +28,34 @@ export const ITEMS_PER_PAGE = 9;
 export const MAX_PAGES_COUNT_PER_PAGE = 3;
 
 export enum CameraTypes {
-  Коллекционная = 'Коллекционная',
-  Моментальная = 'Моментальная',
-  Цифровая = 'Цифровая',
-  Плёночная = 'Плёночная',
+  Collection = 'Коллекционная',
+  Snapshot = 'Моментальная',
+  Digital = 'Цифровая',
+  Film = 'Плёночная',
 }
 
 export const CameraTypesEng = {
-  [CameraTypes.Коллекционная]: 'collection',
-  [CameraTypes.Моментальная]: 'snapshot',
-  [CameraTypes.Плёночная]: 'film',
-  [CameraTypes.Цифровая]: 'digital',
+  [CameraTypes.Collection]: 'collection',
+  [CameraTypes.Snapshot]: 'snapshot',
+  [CameraTypes.Film]: 'film',
+  [CameraTypes.Digital]: 'digital',
 } as const;
 
 export enum CameraCategory {
-  Видеокамера = 'Видеокамера',
-  Фотоаппарат = 'Фотоаппарат'
+  Photocamera = 'Видеокамера',
+  Videocamera = 'Фотоаппарат'
 }
 
 export enum CameraLevel {
-  Нулевой = 'Нулевой',
-  Любительский = 'Любительский',
-  Профессиональный = 'Профессиональный',
+  Zero = 'Нулевой',
+  'Non-professional' = 'Любительский',
+  Professional = 'Профессиональный',
 }
 
 export const CameraLevelEng = {
-  [CameraLevel.Нулевой]: 'zero',
-  [CameraLevel.Любительский]: 'non-professional',
-  [CameraLevel.Профессиональный]: 'professional'
+  [CameraLevel.Zero]: 'zero',
+  [CameraLevel['Non-professional']]: 'non-professional',
+  [CameraLevel.Professional]: 'professional'
 } as const;
 
 export enum CouponType {

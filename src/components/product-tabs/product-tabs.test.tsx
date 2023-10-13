@@ -6,9 +6,9 @@ import { CameraCategory, CameraLevel, CameraTypes, Status } from '../../const';
 describe('Component: Rating Stars', () => {
   const info = {
     vendorCode: 'BVG78VB',
-    type: CameraTypes.Коллекционная,
-    level: CameraLevel.Нулевой,
-    category: CameraCategory.Видеокамера,
+    type: CameraTypes.Collection,
+    level: CameraLevel.Zero,
+    category: CameraCategory.Videocamera,
     description: 'qwerty ytrewq'
   };
 

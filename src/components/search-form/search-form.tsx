@@ -102,7 +102,8 @@ function SearchForm(): JSX.Element {
         <button className="form-search__reset" type="reset" onClick={handleInputReset}>
           <svg width="10" height="10" aria-hidden="true">
             <use xlinkHref="#icon-close"></use>
-          </svg><span className="visually-hidden">Сбросить поиск</span>
+          </svg>
+          <span className="visually-hidden">Сбросить поиск</span>
         </button>
       </ReactFocusLock>
     </div>

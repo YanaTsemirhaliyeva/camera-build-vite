@@ -5,7 +5,7 @@ import { changeFilterType } from '../../store/cameras/cameras.slice';
 
 function FilterType(): JSX.Element {
   const dispatch = useAppDispatch();
-  const isActiveCategoryVideo = useAppSelector(getCurrentFilterCategory) === CameraCategory.Видеокамера;
+  const isActiveCategoryVideo = useAppSelector(getCurrentFilterCategory) === CameraCategory.Videocamera;
   const activeType = useAppSelector(getCurrentFilterType);
 
   const handleTypeChange = (type: CameraTypes) => {
@@ -16,7 +16,7 @@ function FilterType(): JSX.Element {
     <fieldset className="catalog-filter__block">
       <legend className="title title--h5">Тип камеры</legend>
       {Object.values(CameraTypes).map((type) => {
-        const isTypeDisabled = isActiveCategoryVideo && (type === CameraTypes.Моментальная || type === CameraTypes.Плёночная);
+        const isTypeDisabled = isActiveCategoryVideo && (type === CameraTypes.Snapshot || type === CameraTypes.Film);
         return (
           <div className="custom-checkbox catalog-filter__item" key={CameraTypesEng[type]}>
             <label>

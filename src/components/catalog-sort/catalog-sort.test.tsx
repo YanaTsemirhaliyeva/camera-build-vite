@@ -3,7 +3,7 @@ import { render, screen} from '@testing-library/react';
 import CatalogSort from './catalog-sort';
 import { Status } from '../../const';
 
-describe('Component: Catalog Filter', () => {
+describe('Component: Catalog Sort', () => {
 
   it('should render correctly', () => {
 
