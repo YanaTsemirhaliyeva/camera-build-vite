@@ -28,10 +28,10 @@ export const ITEMS_PER_PAGE = 9;
 export const MAX_PAGES_COUNT_PER_PAGE = 3;
 
 export enum CameraTypes {
-  Collection = 'Коллекционная',
-  Snapshot = 'Моментальная',
   Digital = 'Цифровая',
   Film = 'Плёночная',
+  Snapshot = 'Моментальная',
+  Collection = 'Коллекционная',
 }
 
 export const CameraTypesEng = {

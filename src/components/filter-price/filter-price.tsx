@@ -121,7 +121,7 @@ function FilterPrice({resetFilters}: FilterPriceProps): JSX.Element {
         <div className="custom-input">
           <label>
             <input type="number" name="price"
-              placeholder={`от ${minPrice}`}
+              placeholder="от"
               min={Number.MIN_VALUE}
               onChange={handleMinPriceInputChange}
               onKeyDown={handleMinPriceKeyDown}
@@ -133,7 +133,7 @@ function FilterPrice({resetFilters}: FilterPriceProps): JSX.Element {
         <div className="custom-input">
           <label>
             <input type="number" name="priceUp"
-              placeholder={`до ${maxPrice}`}
+              placeholder="до"
               min={Number.MIN_VALUE}
               onChange={handleMaxPriceInputChange}
               onKeyDown={handleMaxPriceKeyDown}
