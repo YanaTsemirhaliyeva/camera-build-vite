@@ -1,9 +1,23 @@
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
-import { memo } from 'react';
+import { memo, useEffect, useRef } from 'react';
 import MemoSearchForm from '../search-form/search-form';
+import { useAppSelector } from '../../hooks';
+import { getBasketItems } from '../../store/basket/basket.selectors';
 
 function Header(): JSX.Element {
+  const basketItems = useAppSelector(getBasketItems);
+  const quantityItems = basketItems.reduce((sum, item) => item.count + sum, 0);
+  const isMounted = useRef(false);
+
+  useEffect(() => {
+    if (isMounted.current) {
+      const json = JSON.stringify(basketItems);
+      localStorage.setItem('basket', json);
+    }
+    isMounted.current = true;
+  }, [basketItems]);
+
   return (
     <header className="header" id="header">
       <div className="container">
@@ -32,7 +46,8 @@ function Header(): JSX.Element {
         <Link className="header__basket-link" to={AppRoute.Basket} data-testid='header-basket'>
           <svg width="16" height="16" aria-hidden="true">
             <use xlinkHref="#icon-basket"></use>
-          </svg><span className="header__basket-count">3</span>
+          </svg>
+          {basketItems.length > 0 && <span className="header__basket-count">{quantityItems}</span>}
         </Link>
       </div>
     </header>

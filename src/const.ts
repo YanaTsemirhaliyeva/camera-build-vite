@@ -11,7 +11,7 @@ export enum APIRoute {
   Promo = '/promo',
   Reviews = '/cameras/:cameraId/reviews',
   ReviewPost = '/reviews',
-  Coupon = '/coupon',
+  Coupon = '/coupons',
   Order = '/orders',
 }
 
@@ -22,6 +22,7 @@ export enum NameSpace {
   Promo = 'PROMO',
   Coupon = 'COUPON',
   Similar = 'SIMILAR',
+  Basket = 'BASKET'
 }
 
 export const ITEMS_PER_PAGE = 9;
@@ -63,6 +64,9 @@ export enum CouponType {
   'camera-444' = 'camera-444',
   'camera-555' = 'camera-555',
 }
+
+export const MAX_QUANTITY_ITEMS = 99;
+export const MIN_QUANTITY_ITEMS = 1;
 
 export const RATING_VALUES = [1, 2, 3, 4, 5];
 

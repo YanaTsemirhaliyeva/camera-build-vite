@@ -1,5 +1,6 @@
 import { CameraCategory, CameraLevel, CameraTypes, SortOrder, SortType } from './const';
 import { Camera } from './types/camera';
+import { Basket } from './types/state';
 
 // Сортировка каталога по цене/популярности
 
@@ -112,4 +113,18 @@ export const filterCameras = (
 
   return filteredCamerasByPrice;
 };
+
+// Получение списка корзины из local storage
+
+export const getBasketListFromLS = () => {
+  const data = localStorage.getItem('basket');
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+  const items = data ? JSON.parse(data) : [];
+  return {
+    items: items as Basket[]
+  };
+};
+
+export const calcTotalPrice = (items: Basket[]) => items.reduce((sum, obj) => obj.price * obj.count + sum, 0);
+
 

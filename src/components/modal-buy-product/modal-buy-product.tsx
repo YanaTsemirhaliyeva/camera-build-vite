@@ -1,3 +1,5 @@
+import { useAppDispatch } from '../../hooks';
+import { addItem } from '../../store/basket/basket.slice';
 import { Camera } from '../../types/camera';
 import LayoutModal from '../layout-modal/layoyt-modal';
 
@@ -5,13 +7,22 @@ type ModalBuyProductProps = {
   isActive: boolean;
   setIsModalActive: (arg: boolean) => void;
   camera: Camera;
+  setAddSuccess: (arg: boolean) => void;
 }
 
-function ModalBuyProduct({isActive, setIsModalActive, camera}: ModalBuyProductProps): JSX.Element {
+function ModalBuyProduct({isActive, setIsModalActive, camera, setAddSuccess}: ModalBuyProductProps): JSX.Element {
+
+  const dispatch = useAppDispatch();
 
   const {name, type, level, vendorCode, price, previewImg, previewImg2x, previewImgWebp, previewImgWebp2x} = camera;
   const sourceSrcSet = `../${previewImgWebp}, ../${previewImgWebp2x} 2x`;
   const imgSrcSet = `../${previewImg2x} 2x`;
+
+  const handleItemBasketAdd = () => {
+    dispatch(addItem(camera));
+    setIsModalActive(false);
+    setAddSuccess(true);
+  };
 
   return (
     <LayoutModal isActive={isActive} setIsModalActive={setIsModalActive}>
@@ -35,7 +46,9 @@ function ModalBuyProduct({isActive, setIsModalActive, camera}: ModalBuyProductPr
         </div>
       </div>
       <div className="modal__buttons">
-        <button className="btn btn--purple modal__btn modal__btn--fit-width" type="button">
+        <button className="btn btn--purple modal__btn modal__btn--fit-width" type="button"
+          onClick={handleItemBasketAdd}
+        >
           <svg width="24" height="16" aria-hidden="true">
             <use xlinkHref="#icon-add-basket"></use>
           </svg>Добавить в корзину

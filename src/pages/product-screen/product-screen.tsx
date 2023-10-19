@@ -5,7 +5,7 @@ import ReviewBlock from '../../components/review-block/review-block';
 import SimilarProducts from '../../components/similar-products/similar-products';
 import { AppRoute } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { getActiveCameraModal, getCameraItem, isCameraItemStatusLoading } from '../../store/cameras/cameras.selectors';
+import { getCameraItem, isCameraItemStatusLoading } from '../../store/cameras/cameras.selectors';
 import { useEffect, useState } from 'react';
 import { fetchCameraItemAction, fetchReviewsAction, fetchSimilarProductsAction } from '../../store/api-actions';
 import Spinner from '../../components/spinner/spinner';
@@ -20,6 +20,7 @@ import { dropReviews } from '../../store/reviews/reviews.slice';
 import { dropSimilar } from '../../store/similar/similar.slice';
 import ProductTabs from '../../components/product-tabs/product-tabs';
 import ModalSuccessfulFeedback from '../../components/modal-successful-feedback/modal-successful-feedback';
+import ModalAddItemSuccess from '../../components/modal-add-item-success/modal-add-item.success';
 
 function ProductScreen(): JSX.Element {
   const {cameraId} = useParams();
@@ -33,10 +34,10 @@ function ProductScreen(): JSX.Element {
 
   const reviews = useAppSelector(getReviews);
 
-  const [isModalActive, setIsModalACtive] = useState(false);
-  const activeCameraModal = useAppSelector(getActiveCameraModal);
+  const [isModalActive, setIsModalActive] = useState(false);
 
   const [isFormModalActive, setIsFormModalActive] = useState(false);
+  const [isItemAddModalActive, setItemAddModalActive] = useState(false);
 
   useEffect(() => {
     if (cameraId) {
@@ -67,6 +68,10 @@ function ProductScreen(): JSX.Element {
   const imgSrcSet = `../../${previewImg2x} 2x`;
   const imgPreview = `../../${previewImg}`;
 
+  const handleButtonBuyClick = () => {
+    setIsModalActive(true);
+  };
+
   return (
     <MemoLayout pageTitle="Карточка товара">
       <main>
@@ -89,7 +94,9 @@ function ProductScreen(): JSX.Element {
                     <p className="rate__count"><span className="visually-hidden">Всего оценок:</span>{reviewCount}</p>
                   </div>
                   <p className="product__price"><span className="visually-hidden">Цена:</span>{price.toLocaleString()} ₽</p>
-                  <button className="btn btn--purple" type="button">
+                  <button className="btn btn--purple" type="button"
+                    onClick={handleButtonBuyClick}
+                  >
                     <svg width="24" height="16" aria-hidden="true">
                       <use xlinkHref="#icon-add-basket"></use>
                     </svg>Добавить в корзину
@@ -100,14 +107,14 @@ function ProductScreen(): JSX.Element {
             </section>
           </div>
           <div className="page-content__section" data-testid='similars'>
-            {similarProducts.length > 0 && <SimilarProducts similars={similarProducts} setIsModalActive={setIsModalACtive} />}
+            {similarProducts.length > 0 && <SimilarProducts similars={similarProducts} />}
           </div>
           <div className="page-content__section" data-testid='reviews'>
             <ReviewBlock reviews={reviews} setIsModalActive={setIsFormModalActive} />
           </div>
         </div>
-        {activeCameraModal &&
-          <ModalBuyProduct isActive={isModalActive} setIsModalActive={setIsModalACtive} camera={activeCameraModal} />}
+        <ModalBuyProduct isActive={isModalActive} setIsModalActive={setIsModalActive} camera={currentProduct} setAddSuccess={setItemAddModalActive}/>
+        <ModalAddItemSuccess isActive={isItemAddModalActive} setIsModalActive={setItemAddModalActive} page={AppRoute.Product}/>
         <ModalFormReview isActive={isFormModalActive} setIsModalActive={setIsFormModalActive} />
         <ModalSuccessfulFeedback />
       </main>

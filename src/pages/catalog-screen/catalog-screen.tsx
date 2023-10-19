@@ -15,6 +15,7 @@ import { useSearchParams } from 'react-router-dom';
 import { QueryParams } from '../../types/query-params';
 import { changeResetStatus, changeSortOrder, changeSortType, setActiveCategory, setActiveLevel, setActivePage, setActiveType, setMaxPrice, setMinPrice } from '../../store/cameras/cameras.slice';
 import { getPromo } from '../../store/promo/promo.selectors';
+import ModalAddItemSuccess from '../../components/modal-add-item-success/modal-add-item.success';
 
 
 function CatalogScreen(): JSX.Element {
@@ -151,6 +152,7 @@ function CatalogScreen(): JSX.Element {
   const [isModalActive, setIsModalACtive] = useState(false);
   const [currentCamera, setCurrentCamera] = useState<number>();
   const activeCamera = cameraList.find((item) => item.id === currentCamera);
+  const [isItemAddModalActive, setItemAddModalActive] = useState(false);
 
   const lastContentIndex = activePage * ITEMS_PER_PAGE;
   const firstContentIndex = lastContentIndex - ITEMS_PER_PAGE;
@@ -182,7 +184,8 @@ function CatalogScreen(): JSX.Element {
             </div>
           </section>
         </div>
-        {activeCamera && <ModalBuyProduct isActive={isModalActive} setIsModalActive={setIsModalACtive} camera={activeCamera}/>}
+        {activeCamera && <ModalBuyProduct isActive={isModalActive} setIsModalActive={setIsModalACtive} camera={activeCamera} setAddSuccess={setItemAddModalActive} />}
+        <ModalAddItemSuccess isActive={isItemAddModalActive} setIsModalActive={setItemAddModalActive} page={AppRoute.Index} />
       </main>
     </MemoLayout>
   );

@@ -46,3 +46,12 @@ export type FiltersData = {
   category: CameraCategory | null;
   level: CameraLevel[];
 };
+
+export type Basket = {
+  count: number;
+} & Camera;
+
+export type BasketData = {
+  items: Basket[] ;
+  discount: number;
+};

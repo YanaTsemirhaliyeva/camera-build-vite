@@ -2,10 +2,11 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { Camera } from '../types/camera';
 import { AppDispatch, State } from '../types/state';
 import { AxiosInstance } from 'axios';
-import { APIRoute } from '../const';
+import { APIRoute, CouponType } from '../const';
 import { Promo } from '../types/promo';
 import { generatePath } from 'react-router-dom';
 import { Review, ReviewPost } from '../types/review';
+import { Order } from '../types/order';
 
 export const fetchCamerasAction = createAsyncThunk<Camera[], undefined, {
   dispatch: AppDispatch;
@@ -79,3 +80,26 @@ export const postReviewAction = createAsyncThunk<Review, ReviewPost, {
   }
 );
 
+export const postCouponAction = createAsyncThunk<number, CouponType, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'DATA/postCoupon',
+  async (coupon, {extra: api}) => {
+    const {data} = await api.post<number>(APIRoute.Coupon, {coupon});
+    return data;
+  }
+);
+
+export const postOrderAction = createAsyncThunk<number, Order, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'DATA/postOrder',
+  async ({camerasIds, coupon}, {extra: api}) => {
+    const {data} = await api.post<number>(APIRoute.Order, {camerasIds, coupon});
+    return data;
+  }
+);

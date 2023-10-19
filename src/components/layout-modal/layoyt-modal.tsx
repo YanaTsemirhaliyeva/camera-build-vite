@@ -3,15 +3,17 @@ import { useCallback, useEffect, useRef } from 'react';
 import FocusLock from 'react-focus-lock';
 import { useAppDispatch } from '../../hooks';
 import { resetPostStatus } from '../../store/reviews/reviews.slice';
+import { KeyCode } from '../../const';
 
 type LayoutModalProps = {
   children: React.ReactNode;
   isActive: boolean;
   setIsModalActive: (arg: boolean) => void;
   modalFeedback?: boolean;
+  classname?: string;
 }
 
-function LayoutModal({children, isActive, setIsModalActive, modalFeedback}: LayoutModalProps): JSX.Element {
+function LayoutModal({children, isActive, setIsModalActive, modalFeedback, classname}: LayoutModalProps): JSX.Element {
   const modalRef = useRef(null);
   const dispatch = useAppDispatch();
 
@@ -23,7 +25,7 @@ function LayoutModal({children, isActive, setIsModalActive, modalFeedback}: Layo
   };
 
   const handleEscapeKeydown = useCallback((evt: KeyboardEvent) => {
-    if (evt.key === 'Escape') {
+    if (evt.key === KeyCode.Esc) {
       setIsModalActive(false);
     }
     if (modalFeedback) {
@@ -45,7 +47,7 @@ function LayoutModal({children, isActive, setIsModalActive, modalFeedback}: Layo
 
   return (
     <FocusLock returnFocus disabled={!isActive}>
-      <div className={classNames({'is-active': isActive}, 'modal')}
+      <div className={classNames({'is-active': isActive}, 'modal', classname && 'modal--narrow')}
         ref={modalRef}
         data-testid='modal-container'
       >
