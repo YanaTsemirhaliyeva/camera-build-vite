@@ -7,9 +7,11 @@ import './similar-products.css';
 
 type SimilarProductsProps = {
   similars: Camera[];
+  setCurrentCamera: (arg: Camera) => void;
+  setIsModalActive: (arg: boolean) => void;
 }
 
-function SimilarProducts({similars}: SimilarProductsProps): JSX.Element {
+function SimilarProducts({similars, setCurrentCamera, setIsModalActive}: SimilarProductsProps): JSX.Element {
 
   return (
     <section className="product-similar">
@@ -29,7 +31,7 @@ function SimilarProducts({similars}: SimilarProductsProps): JSX.Element {
             >
               {similars.map((camera) => (
                 <SwiperSlide key={camera.vendorCode}>
-                  <SimilarCard card={camera} style={{width: '100%', margin: 0}} />
+                  <SimilarCard card={camera} style={{ width: '100%', margin: 0 }} setCurrentCamera={setCurrentCamera} setIsModalActive={setIsModalActive} />
                 </SwiperSlide>
               ))}
             </Swiper>

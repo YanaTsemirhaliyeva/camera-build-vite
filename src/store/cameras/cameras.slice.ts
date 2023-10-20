@@ -30,7 +30,7 @@ export const cameras = createSlice({
       state.activePage = action.payload;
     },
     setActiveCameraModal: (state, action: PayloadAction<number>) => {
-      state.activeCameraModal = state.cameras.slice().find((camera) => camera.id === action.payload);
+      state.activeCameraModal = state.cameras.find((camera) => camera.id === action.payload);
     },
     dropCameraItem: (state) => {
       state.cameraItem = null;

@@ -54,7 +54,7 @@ function BasketSummaryOrder({totalPrice, orderIds, setIsModalActive}: BasketSumm
         <p className="title title--h4">Если у вас есть промокод на скидку, примените его в этом поле</p>
         <div className="basket-form">
           <form action="#" onSubmit={handlePromoCodeEnter}>
-            <div className={classNames({'is-invalid': isError, 'is-valid': isValid}, 'custom-input')}>
+            <div className={classNames({'is-invalid': isError, 'is-valid': isValid || discount > 0}, 'custom-input')}>
               <label>
                 <span className="custom-input__label">Промокод</span>
                 <input type="text" name="promo" placeholder="Введите промокод"
@@ -84,7 +84,7 @@ function BasketSummaryOrder({totalPrice, orderIds, setIsModalActive}: BasketSumm
           <span className="basket__summary-text basket__summary-text--total">К оплате:</span>
           <span className="basket__summary-value basket__summary-value--total">{priceWithDiscount.toLocaleString()} ₽</span>
         </p>
-        <button className="btn btn--purple" type="submit" onClick={handleOrderSend}>
+        <button className="btn btn--purple" type="submit" onClick={handleOrderSend} disabled={postOrderStatus === Status.Loading}>
           Оформить заказ
         </button>
       </div>

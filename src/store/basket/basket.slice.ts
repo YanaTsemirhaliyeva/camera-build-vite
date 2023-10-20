@@ -1,18 +1,19 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { BasketData } from '../../types/state';
 import { CouponType, NameSpace, Status } from '../../const';
-import { getBasketListFromLS } from '../../utils';
+import { getBasketListFromLS, getDiscountLS, getPromoCodeLS } from '../../utils';
 import { Camera } from '../../types/camera';
 import { postCouponAction, postOrderAction } from '../api-actions';
 import { toast } from 'react-toastify';
 
 const {items} = getBasketListFromLS();
-
+const {promo} = getPromoCodeLS();
+const {promoDiscount} = getDiscountLS();
 
 const initialState: BasketData = {
   items: items,
-  discount: 0,
-  promoCode: null,
+  discount: promoDiscount,
+  promoCode: promo,
   hasError: false,
   isPromoCodeValid: false,
   status: Status.Idle
@@ -65,6 +66,8 @@ export const basket = createSlice({
       state.hasError = false;
       state.isPromoCodeValid = false;
       state.status = Status.Idle;
+      localStorage.removeItem('promo');
+      localStorage.removeItem('discount');
     },
   },
   extraReducers(builder) {
@@ -77,11 +80,14 @@ export const basket = createSlice({
         state.discount = action.payload;
         state.hasError = false;
         state.isPromoCodeValid = true;
+        localStorage.setItem('promo', JSON.stringify(state.promoCode));
+        localStorage.setItem('discount', JSON.stringify(state.discount));
       })
       .addCase(postCouponAction.rejected, (state) => {
         state.hasError = true;
         state.isPromoCodeValid = false;
         state.discount = 0;
+        localStorage.removeItem('promo');
       })
       .addCase(postOrderAction.pending, (state) => {
         state.status = Status.Loading;

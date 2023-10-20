@@ -1,4 +1,4 @@
-import { ChangeEvent, FocusEvent, KeyboardEvent, useRef, useState } from 'react';
+import { ChangeEvent, KeyboardEvent, useRef } from 'react';
 import { useAppDispatch } from '../../hooks';
 import { minusCountItem, plusCountItem, setCountItem } from '../../store/basket/basket.slice';
 import { Basket } from '../../types/state';
@@ -15,7 +15,6 @@ function BasketItemCard({item, setCamera, setActive}: BasketItemCardProps): JSX.
   const dispatch = useAppDispatch();
   const ref = useRef<HTMLInputElement | null>(null);
   const {id, previewImg, previewImg2x, previewImgWebp, previewImgWebp2x, name, type, level, price, vendorCode, count} = item;
-  const [quantity, setQuantity] = useState(count);
 
   const sourceSrcSet = `../../${previewImgWebp}, ../../${previewImgWebp2x} 2x`;
   const imgSrcSet = `../../${previewImg2x} 2x`;
@@ -28,37 +27,29 @@ function BasketItemCard({item, setCamera, setActive}: BasketItemCardProps): JSX.
 
   const handlePlusItem = () => {
     dispatch(plusCountItem(id));
-    setQuantity(quantity + 1);
   };
 
   const handleMinusItem = () => {
     dispatch(minusCountItem(id));
-    setQuantity(quantity - 1);
-  };
-
-  const checkValue = (value: number) => {
-    if (value <= 0) {
-      dispatch(setCountItem({ id, count: MIN_QUANTITY_ITEMS }));
-      setQuantity(MIN_QUANTITY_ITEMS);
-      return;
-    }
-    if (value > MAX_QUANTITY_ITEMS) {
-      dispatch(setCountItem({ id, count: MAX_QUANTITY_ITEMS }));
-      setQuantity(MAX_QUANTITY_ITEMS);
-      return;
-    }
-    setQuantity(value);
-    dispatch(setCountItem({ id, count: value }));
   };
 
   const handleInputValueChange = (evt: ChangeEvent<HTMLInputElement>) => {
-    const value = +evt.target.value.replace(/^0+/, '');
-    checkValue(value);
+    const { value } = evt.target;
+
+    if (+value > MAX_QUANTITY_ITEMS) {
+      dispatch(setCountItem({ id: id, count: MAX_QUANTITY_ITEMS }));
+      return;
+    }
+
+    dispatch(setCountItem({ id: id, count: Math.round(+value) }));
   };
 
-  const handleInputValueBlur = (evt: FocusEvent<HTMLInputElement, Element>) => {
-    const value = +evt.target.value.replace(/^0+/, '');
-    checkValue(value);
+  const handleInputValueBlur = (evt: ChangeEvent<HTMLInputElement>) => {
+    const { value } = evt.target;
+
+    if (+value < MIN_QUANTITY_ITEMS) {
+      dispatch(setCountItem({ id: id, count: MIN_QUANTITY_ITEMS }));
+    }
   };
 
   const handleEnterClick = (evt: KeyboardEvent<HTMLInputElement>) => {
@@ -91,7 +82,7 @@ function BasketItemCard({item, setCamera, setActive}: BasketItemCardProps): JSX.
       <div className="quantity">
         <button className="btn-icon btn-icon--prev" aria-label="уменьшить количество товара"
           onClick={handleMinusItem}
-          disabled={quantity <= MIN_QUANTITY_ITEMS}
+          disabled={count <= MIN_QUANTITY_ITEMS}
         >
           <svg width="7" height="12" aria-hidden="true">
             <use xlinkHref="#icon-arrow"></use>
@@ -102,12 +93,12 @@ function BasketItemCard({item, setCamera, setActive}: BasketItemCardProps): JSX.
           ref={ref}
           onChange={handleInputValueChange}
           onBlur={handleInputValueBlur}
-          value={quantity}
+          value={count || ''}
           onKeyDown={handleEnterClick}
         />
         <button className="btn-icon btn-icon--next" aria-label="увеличить количество товара"
           onClick={handlePlusItem}
-          disabled={quantity === MAX_QUANTITY_ITEMS}
+          disabled={count === MAX_QUANTITY_ITEMS}
         >
           <svg width="7" height="12" aria-hidden="true">
             <use xlinkHref="#icon-arrow"></use>

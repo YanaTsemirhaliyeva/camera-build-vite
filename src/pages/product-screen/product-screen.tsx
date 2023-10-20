@@ -15,12 +15,13 @@ import { getSimilarProducts, isSimilarProductsLoading } from '../../store/simila
 import { getReviews } from '../../store/reviews/reviews.selectors';
 import ModalBuyProduct from '../../components/modal-buy-product/modal-buy-product';
 import ModalFormReview from '../../components/modal-form-review/modal-form-review';
-import { dropCameraItem } from '../../store/cameras/cameras.slice';
+import { dropCameraItem, setActiveCameraModal } from '../../store/cameras/cameras.slice';
 import { dropReviews } from '../../store/reviews/reviews.slice';
 import { dropSimilar } from '../../store/similar/similar.slice';
 import ProductTabs from '../../components/product-tabs/product-tabs';
 import ModalSuccessfulFeedback from '../../components/modal-successful-feedback/modal-successful-feedback';
 import ModalAddItemSuccess from '../../components/modal-add-item-success/modal-add-item.success';
+import { Camera } from '../../types/camera';
 
 function ProductScreen(): JSX.Element {
   const {cameraId} = useParams();
@@ -33,11 +34,11 @@ function ProductScreen(): JSX.Element {
   const isSimilarDataLoading = useAppSelector(isSimilarProductsLoading);
 
   const reviews = useAppSelector(getReviews);
-
   const [isModalActive, setIsModalActive] = useState(false);
 
   const [isFormModalActive, setIsFormModalActive] = useState(false);
   const [isItemAddModalActive, setItemAddModalActive] = useState(false);
+  const [camera, setCamera] = useState<Camera>();
 
   useEffect(() => {
     if (cameraId) {
@@ -70,6 +71,8 @@ function ProductScreen(): JSX.Element {
 
   const handleButtonBuyClick = () => {
     setIsModalActive(true);
+    setCamera(currentProduct);
+    dispatch(setActiveCameraModal(currentProduct.id));
   };
 
   return (
@@ -107,13 +110,13 @@ function ProductScreen(): JSX.Element {
             </section>
           </div>
           <div className="page-content__section" data-testid='similars'>
-            {similarProducts.length > 0 && <SimilarProducts similars={similarProducts} />}
+            {similarProducts.length > 0 && <SimilarProducts similars={similarProducts} setCurrentCamera={setCamera} setIsModalActive={setIsModalActive} />}
           </div>
           <div className="page-content__section" data-testid='reviews'>
             <ReviewBlock reviews={reviews} setIsModalActive={setIsFormModalActive} />
           </div>
         </div>
-        <ModalBuyProduct isActive={isModalActive} setIsModalActive={setIsModalActive} camera={currentProduct} setAddSuccess={setItemAddModalActive}/>
+        {camera && <ModalBuyProduct isActive={isModalActive} setIsModalActive={setIsModalActive} camera={camera} setAddSuccess={setItemAddModalActive}/>}
         <ModalAddItemSuccess isActive={isItemAddModalActive} setIsModalActive={setItemAddModalActive} page={AppRoute.Product}/>
         <ModalFormReview isActive={isFormModalActive} setIsModalActive={setIsFormModalActive} />
         <ModalSuccessfulFeedback />
