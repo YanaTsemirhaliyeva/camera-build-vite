@@ -9,9 +9,10 @@ import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 type BasketSummaryOrderProps = {
   totalPrice: number;
   orderIds: number[];
+  setIsModalActive: (arg: boolean) => void;
 }
 
-function BasketSummaryOrder({totalPrice, orderIds}: BasketSummaryOrderProps): JSX.Element {
+function BasketSummaryOrder({totalPrice, orderIds, setIsModalActive}: BasketSummaryOrderProps): JSX.Element {
   const dispatch = useAppDispatch();
   const discountPercent = useAppSelector(getDiscount);
   const discount = Math.round(totalPrice * discountPercent / 100);
@@ -42,9 +43,10 @@ function BasketSummaryOrder({totalPrice, orderIds}: BasketSummaryOrderProps): JS
 
   useEffect(() => {
     if (postOrderStatus === Status.Success) {
+      setIsModalActive(true);
       dispatch(resetBasket());
     }
-  }, [dispatch, postOrderStatus]);
+  }, [dispatch, postOrderStatus, setIsModalActive]);
 
   return (
     <div className="basket__summary">

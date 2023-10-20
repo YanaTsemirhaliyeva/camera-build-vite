@@ -10,6 +10,7 @@ import { useState } from 'react';
 import { Camera } from '../../types/camera';
 import BasketSummaryOrder from '../../components/basket-summary-order/basket-summary-order';
 import BasketEmpty from '../../components/basket-empty/basket-empty';
+import ModalBasketSuccess from '../../components/modal-basket-success/modal-basket-success';
 
 function BasketScreen(): JSX.Element {
   const basketItemList = useAppSelector(getBasketItems);
@@ -27,6 +28,8 @@ function BasketScreen(): JSX.Element {
   const [camera, setCamera] = useState<Camera>();
   const [isModalActive, setModalActive] = useState(false);
 
+  const [isModalBasketSuccess, setModalBasketSuccess] = useState(false);
+
 
   return (
     <MemoLayout pageTitle="Корзина">
@@ -42,13 +45,14 @@ function BasketScreen(): JSX.Element {
                   <ul className="basket__list">
                     {basketItemList.map((item) => <BasketItemCard key={item.id} item={item} setCamera={setCamera} setActive={setModalActive}/>)}
                   </ul>
-                  <BasketSummaryOrder totalPrice={totalPrice} orderIds={orderIds} />
+                  <BasketSummaryOrder totalPrice={totalPrice} orderIds={orderIds} setIsModalActive={setModalBasketSuccess} />
                 </> :
                 <BasketEmpty />}
             </div>
           </section>
         </div>
         {camera && <ModalRemoveItem camera={camera} isActive={isModalActive} setActive={setModalActive} />}
+        <ModalBasketSuccess isActive={isModalBasketSuccess} setIsModalActive={setModalBasketSuccess} />
       </main>
     </MemoLayout>
   );
