@@ -1,6 +1,6 @@
 import { CouponType } from '../const';
 
 export type Order = {
-  camerasIds: [number];
+  camerasIds: number[];
   coupon: CouponType | null;
 }

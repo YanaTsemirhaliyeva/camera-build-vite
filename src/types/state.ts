@@ -54,7 +54,8 @@ export type Basket = {
 export type BasketData = {
   items: Basket[] ;
   discount: number;
-  promoCode: CouponType | '';
+  promoCode: CouponType | null;
   hasError: boolean;
   isPromoCodeValid: boolean;
+  status: Status;
 };

@@ -97,9 +97,10 @@ export const makeFakeStore = (initialState?: Partial<State>): State => ({
   BASKET: {
     items: [],
     discount: 0,
-    promoCode: '',
+    promoCode: null,
     hasError: false,
     isPromoCodeValid: false,
+    status: Status.Idle,
   },
   ...initialState ?? {},
 });

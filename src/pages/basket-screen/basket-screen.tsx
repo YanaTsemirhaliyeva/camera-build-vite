@@ -14,6 +14,15 @@ import BasketEmpty from '../../components/basket-empty/basket-empty';
 function BasketScreen(): JSX.Element {
   const basketItemList = useAppSelector(getBasketItems);
   const totalPrice = calcTotalPrice(basketItemList);
+  const orderIds: number[] = [];
+
+  [...basketItemList].forEach((item) => {
+    let i = 0;
+    do {
+      orderIds.push(item.id);
+      i++;
+    } while (i < item.count);
+  });
 
   const [camera, setCamera] = useState<Camera>();
   const [isModalActive, setModalActive] = useState(false);
@@ -33,7 +42,7 @@ function BasketScreen(): JSX.Element {
                   <ul className="basket__list">
                     {basketItemList.map((item) => <BasketItemCard key={item.id} item={item} setCamera={setCamera} setActive={setModalActive}/>)}
                   </ul>
-                  <BasketSummaryOrder totalPrice={totalPrice}/>
+                  <BasketSummaryOrder totalPrice={totalPrice} orderIds={orderIds} />
                 </> :
                 <BasketEmpty />}
             </div>

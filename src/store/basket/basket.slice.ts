@@ -1,9 +1,10 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { BasketData } from '../../types/state';
-import { CouponType, NameSpace } from '../../const';
+import { CouponType, NameSpace, Status } from '../../const';
 import { getBasketListFromLS } from '../../utils';
 import { Camera } from '../../types/camera';
-import { postCouponAction } from '../api-actions';
+import { postCouponAction, postOrderAction } from '../api-actions';
+import { toast } from 'react-toastify';
 
 const {items} = getBasketListFromLS();
 
@@ -11,9 +12,10 @@ const {items} = getBasketListFromLS();
 const initialState: BasketData = {
   items: items,
   discount: 0,
-  promoCode: '',
+  promoCode: null,
   hasError: false,
   isPromoCodeValid: false,
+  status: Status.Idle
 };
 
 export const basket = createSlice({
@@ -58,6 +60,11 @@ export const basket = createSlice({
     resetBasket: (state) => {
       state.items = [];
       localStorage.removeItem('basket');
+      state.discount = 0;
+      state.promoCode = null;
+      state.hasError = false;
+      state.isPromoCodeValid = false;
+      state.status = Status.Idle;
     },
   },
   extraReducers(builder) {
@@ -75,6 +82,17 @@ export const basket = createSlice({
         state.hasError = true;
         state.isPromoCodeValid = false;
         state.discount = 0;
+      })
+      .addCase(postOrderAction.pending, (state) => {
+        state.status = Status.Loading;
+      })
+      .addCase(postOrderAction.fulfilled, (state) => {
+        state.status = Status.Success;
+        toast.warn('Ваш заказ успешно отправлен!');
+      })
+      .addCase(postOrderAction.rejected, (state) => {
+        state.status = Status.Error;
+        toast.warn('Произошла ошибка отправки заказа. Попробуйте позже');
       });
   }
 });
