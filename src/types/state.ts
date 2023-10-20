@@ -1,4 +1,4 @@
-import { CameraCategory, CameraLevel, CameraTypes, SortOrder, SortType, Status } from '../const';
+import { CameraCategory, CameraLevel, CameraTypes, CouponType, SortOrder, SortType, Status } from '../const';
 import { store } from '../store';
 import { Camera } from './camera';
 import { Promo } from './promo';
@@ -54,4 +54,7 @@ export type Basket = {
 export type BasketData = {
   items: Basket[] ;
   discount: number;
+  promoCode: CouponType | '';
+  hasError: boolean;
+  isPromoCodeValid: boolean;
 };

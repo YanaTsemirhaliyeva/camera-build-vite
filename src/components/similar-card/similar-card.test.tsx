@@ -9,7 +9,7 @@ describe('Component: Similar Card', () => {
   it('should render correctly', () => {
 
     const {withStoreComponent} = withStore(
-      <SimilarCard card={{...mockSimilarProduct}} style={{width: '100%', margin: 0}} setIsModalActive={() => false} />, {});
+      <SimilarCard card={{...mockSimilarProduct}} style={{width: '100%', margin: 0}} />, {});
 
     const preparedComponent = withHistory(withStoreComponent);
     render(preparedComponent);

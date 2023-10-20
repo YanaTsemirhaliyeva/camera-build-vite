@@ -94,6 +94,13 @@ export const makeFakeStore = (initialState?: Partial<State>): State => ({
     isReviewsDataLoading: false,
     status: Status.Idle,
   },
+  BASKET: {
+    items: [],
+    discount: 0,
+    promoCode: '',
+    hasError: false,
+    isPromoCodeValid: false,
+  },
   ...initialState ?? {},
 });
 

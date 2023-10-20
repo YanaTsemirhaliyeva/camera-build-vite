@@ -1,9 +1,10 @@
-import { useRef } from 'react';
 import { CouponType } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { postCouponAction } from '../../store/api-actions';
-import { getDiscount } from '../../store/basket/basket.selectors';
+import { getDiscount, getErrorStatus, getPromoCodeName, isPromoValid } from '../../store/basket/basket.selectors';
 import classNames from 'classnames';
+import { setPromoCode } from '../../store/basket/basket.slice';
+import { ChangeEvent, FormEvent, useState } from 'react';
 
 type BasketSummaryOrderProps = {
   totalPrice: number;
@@ -11,15 +12,25 @@ type BasketSummaryOrderProps = {
 
 function BasketSummaryOrder({totalPrice}: BasketSummaryOrderProps): JSX.Element {
   const dispatch = useAppDispatch();
-  const ref = useRef<HTMLInputElement>(null);
   const discountPercent = useAppSelector(getDiscount);
-  const discount = totalPrice * discountPercent / 100;
-  const priceWithDiscount = totalPrice - discount;
+  const discount = Math.round(totalPrice * discountPercent / 100);
+  const priceWithDiscount = Math.round(totalPrice - discount);
+  const promoCode = useAppSelector(getPromoCodeName);
+  const isError = useAppSelector(getErrorStatus);
+  const isValid = useAppSelector(isPromoValid);
+  const [promoText, setPromoText] = useState<string>(promoCode);
 
-  const handlePromoCodeEnter = (value: string) => {
-    const isValid = CouponType['camera-333'] === value || CouponType['camera-444'] === value || CouponType['camera-555'] === value;
-    if (isValid) {
-      dispatch(postCouponAction(value as CouponType));
+
+  const handleFormChange = (evt: ChangeEvent<HTMLInputElement>): void => {
+    const {value} = evt.target;
+    setPromoText(value);
+  };
+
+  const handlePromoCodeEnter = (evt: FormEvent<HTMLFormElement>) => {
+    evt.preventDefault();
+    if(promoText.length > 0) {
+      dispatch(postCouponAction(promoText as CouponType));
+      dispatch(setPromoCode(promoText as CouponType));
     }
   };
 
@@ -28,18 +39,19 @@ function BasketSummaryOrder({totalPrice}: BasketSummaryOrderProps): JSX.Element 
       <div className="basket__promo">
         <p className="title title--h4">Если у вас есть промокод на скидку, примените его в этом поле</p>
         <div className="basket-form">
-          <form action="#">
-            <div className="custom-input">
+          <form action="#" onSubmit={handlePromoCodeEnter}>
+            <div className={classNames({'is-invalid': isError, 'is-valid': isValid}, 'custom-input')}>
               <label>
                 <span className="custom-input__label">Промокод</span>
-                <input type="text" name="promo" placeholder="Введите промокод" ref={ref} />
+                <input type="text" name="promo" placeholder="Введите промокод"
+                  onChange={handleFormChange}
+                  defaultValue={promoText}
+                />
               </label>
               <p className="custom-input__error">Промокод неверный</p>
               <p className="custom-input__success">Промокод принят!</p>
             </div>
-            <button className="btn" type="submit"
-              onClick={() => handlePromoCodeEnter(ref.current ? ref.current.value : '')}
-            >
+            <button className="btn" type="submit">
               Применить
             </button>
           </form>
@@ -58,7 +70,8 @@ function BasketSummaryOrder({totalPrice}: BasketSummaryOrderProps): JSX.Element 
           <span className="basket__summary-text basket__summary-text--total">К оплате:</span>
           <span className="basket__summary-value basket__summary-value--total">{priceWithDiscount.toLocaleString()} ₽</span>
         </p>
-        <button className="btn btn--purple" type="submit">Оформить заказ
+        <button className="btn btn--purple" type="submit">
+          Оформить заказ
         </button>
       </div>
     </div>

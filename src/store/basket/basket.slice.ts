@@ -1,6 +1,6 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { BasketData } from '../../types/state';
-import { NameSpace } from '../../const';
+import { CouponType, NameSpace } from '../../const';
 import { getBasketListFromLS } from '../../utils';
 import { Camera } from '../../types/camera';
 import { postCouponAction } from '../api-actions';
@@ -11,12 +11,18 @@ const {items} = getBasketListFromLS();
 const initialState: BasketData = {
   items: items,
   discount: 0,
+  promoCode: '',
+  hasError: false,
+  isPromoCodeValid: false,
 };
 
 export const basket = createSlice({
   name: NameSpace.Basket,
   initialState,
   reducers: {
+    setPromoCode: (state, action: PayloadAction<CouponType>) => {
+      state.promoCode = action.payload;
+    },
     addItem: (state, action: PayloadAction<Camera>) => {
       if (!state.items.some((item) => item.id === action.payload.id)) {
         state.items.push({ ...action.payload, count: 1 });
@@ -56,10 +62,21 @@ export const basket = createSlice({
   },
   extraReducers(builder) {
     builder
+      .addCase(postCouponAction.pending, (state) => {
+        state.hasError = false;
+        state.isPromoCodeValid = false;
+      })
       .addCase(postCouponAction.fulfilled, (state, action) => {
         state.discount = action.payload;
+        state.hasError = false;
+        state.isPromoCodeValid = true;
+      })
+      .addCase(postCouponAction.rejected, (state) => {
+        state.hasError = true;
+        state.isPromoCodeValid = false;
+        state.discount = 0;
       });
   }
 });
 
-export const {addItem, setCountItem, plusCountItem, minusCountItem, deleteAllItems, resetBasket} = basket.actions;
+export const {addItem, setCountItem, plusCountItem, minusCountItem, deleteAllItems, resetBasket, setPromoCode} = basket.actions;

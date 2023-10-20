@@ -9,7 +9,7 @@ describe('Component: Modal Buy Product', () => {
   it('should render correctly', () => {
 
     const {withStoreComponent} = withStore(
-      <ModalBuyProduct isActive setIsModalActive={() => true} camera={{...mockCamera}} />, {});
+      <ModalBuyProduct isActive setIsModalActive={() => true} camera={{ ...mockCamera }} setAddSuccess={() => false} />, {});
 
     const preparedComponent = withHistory(withStoreComponent);
     render(preparedComponent);

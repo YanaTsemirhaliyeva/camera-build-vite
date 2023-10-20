@@ -9,7 +9,7 @@ describe('Component: Similar Products', () => {
   it('should render correctly', () => {
 
     const {withStoreComponent} = withStore(
-      <SimilarProducts similars={[...mockSimilarProducts]} setIsModalActive={() => false} />, {});
+      <SimilarProducts similars={[...mockSimilarProducts]} />, {});
 
     const preparedComponent = withHistory(withStoreComponent);
     render(preparedComponent);
