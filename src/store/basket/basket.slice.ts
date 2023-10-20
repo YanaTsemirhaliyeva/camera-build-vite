@@ -88,6 +88,7 @@ export const basket = createSlice({
         state.isPromoCodeValid = false;
         state.discount = 0;
         localStorage.removeItem('promo');
+        localStorage.removeItem('discount');
       })
       .addCase(postOrderAction.pending, (state) => {
         state.status = Status.Loading;
