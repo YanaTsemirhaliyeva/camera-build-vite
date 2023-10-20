@@ -33,6 +33,14 @@ describe('Page: Catalog Screen', () => {
         isPromoDataLoading: false,
         status: Status.Idle,
       },
+      BASKET: {
+        items: [],
+        discount: 0,
+        promoCode: null,
+        hasError: false,
+        isPromoCodeValid: false,
+        status: Status.Idle,
+      },
     });
 
     const expectedText = 'Каталог фото- и видеотехники';

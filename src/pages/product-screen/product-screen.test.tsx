@@ -45,6 +45,14 @@ describe('Component: Page Product Screen', () => {
         isReviewsDataLoading: false,
         status: Status.Idle,
       },
+      BASKET: {
+        items: [],
+        discount: 0,
+        promoCode: null,
+        hasError: false,
+        isPromoCodeValid: false,
+        status: Status.Idle,
+      },
     });
 
     const preparedComponent = withHistory(withStoreComponent);

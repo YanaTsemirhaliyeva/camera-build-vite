@@ -27,6 +27,14 @@ describe('Component: Header', () => {
           category: null,
           level: [],
         },
+        BASKET: {
+          items: [],
+          discount: 0,
+          promoCode: null,
+          hasError: false,
+          isPromoCodeValid: false,
+          status: Status.Idle,
+        },
       });
 
     const preparedComponent = withHistory(withStoreComponent);
