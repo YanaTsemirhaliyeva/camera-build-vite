@@ -14,6 +14,7 @@ import ModalBasketSuccess from '../../components/modal-basket-success/modal-bask
 
 function BasketScreen(): JSX.Element {
   const basketItemList = useAppSelector(getBasketItems);
+  const isBasketEmpty = basketItemList.length === 0;
   const totalPrice = calcTotalPrice(basketItemList);
   const orderIds: number[] = [];
 
@@ -41,13 +42,11 @@ function BasketScreen(): JSX.Element {
             <div className="container">
               <h1 className="title title--h2">Корзина</h1>
               {basketItemList.length > 0 ?
-                <>
-                  <ul className="basket__list">
-                    {basketItemList.map((item) => <BasketItemCard key={item.id} item={item} setCamera={setCamera} setActive={setModalActive}/>)}
-                  </ul>
-                  <BasketSummaryOrder totalPrice={totalPrice} orderIds={orderIds} setIsModalActive={setModalBasketSuccess} />
-                </> :
+                <ul className="basket__list">
+                  {basketItemList.map((item) => <BasketItemCard key={item.id} item={item} setCamera={setCamera} setActive={setModalActive}/>)}
+                </ul> :
                 <BasketEmpty />}
+              <BasketSummaryOrder totalPrice={totalPrice} orderIds={orderIds} setIsModalActive={setModalBasketSuccess} isBasketEmpty={isBasketEmpty} />
             </div>
           </section>
         </div>

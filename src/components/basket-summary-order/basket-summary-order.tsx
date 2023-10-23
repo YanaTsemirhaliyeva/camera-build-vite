@@ -10,9 +10,10 @@ type BasketSummaryOrderProps = {
   totalPrice: number;
   orderIds: number[];
   setIsModalActive: (arg: boolean) => void;
+  isBasketEmpty: boolean;
 }
 
-function BasketSummaryOrder({totalPrice, orderIds, setIsModalActive}: BasketSummaryOrderProps): JSX.Element {
+function BasketSummaryOrder({totalPrice, orderIds, setIsModalActive, isBasketEmpty}: BasketSummaryOrderProps): JSX.Element {
   const dispatch = useAppDispatch();
   const discountPercent = useAppSelector(getDiscount);
   const discount = Math.round(totalPrice * discountPercent / 100);
@@ -84,7 +85,10 @@ function BasketSummaryOrder({totalPrice, orderIds, setIsModalActive}: BasketSumm
           <span className="basket__summary-text basket__summary-text--total">К оплате:</span>
           <span className="basket__summary-value basket__summary-value--total">{priceWithDiscount.toLocaleString()} ₽</span>
         </p>
-        <button className="btn btn--purple" type="submit" onClick={handleOrderSend} disabled={postOrderStatus === Status.Loading}>
+        <button className="btn btn--purple" type="submit"
+          onClick={handleOrderSend}
+          disabled={postOrderStatus === Status.Loading || isBasketEmpty}
+        >
           Оформить заказ
         </button>
       </div>
