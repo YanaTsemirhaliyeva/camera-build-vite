@@ -9,7 +9,7 @@ describe('Component: Basket Summary Order', () => {
   it('should render correctly', () => {
 
     const {withStoreComponent} = withStore(
-      <BasketSummaryOrder totalPrice={0} orderIds={[]} setIsModalActive={() => false} />, mockStore);
+      <BasketSummaryOrder totalPrice={0} orderIds={[]} setIsModalActive={() => false} isBasketEmpty={false} />, mockStore);
 
     const preparedComponent = withHistory(withStoreComponent);
     render(preparedComponent);
