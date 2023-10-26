@@ -8,7 +8,7 @@
 <img src="https://img.shields.io/badge/React%20Hook%20Form-282C34?logo=react-hook-form&logoColor=EC5990" alt="React Hook Form logo" title="React Hook Form" height="25" />&nbsp;
 <img src="https://img.shields.io/badge/Vitest-282C34?logo=vitest&logoColor=6E9F18" alt="Vitest logo" title="Vitest" height="25" />&nbsp;
 
-## Интернет-магазин Фотошоп - онлайн сервис для покупки видео- и фотоаппаратов разного уровня, ценовой категории, типа.
+### Интернет-магазин Фотошоп - онлайн сервис для покупки видео- и фотоаппаратов разного уровня, ценовой категории, типа.
 
 ### На главной странице реализованы:
 - рекламный баннер (Swiper);
